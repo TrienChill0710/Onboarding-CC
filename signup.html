@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign up — ConverCore</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow: hidden;
+    }
+
+    /* ─── Page background ─── */
+    .page {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(180deg, #70BCFF 0%, #FFFFFF 60.78%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ─── Left panel (form) ─── */
+    .left-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 40px 0 40px 95px;
+      width: 645px;
+      min-width: 600px;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* ─── Logo ─── */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      position: absolute;
+      top: 36px;
+      left: 36px;
+    }
+
+    .logo-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      background: linear-gradient(135deg, #c300ff 0%, #0055ff 100%);
+      flex-shrink: 0;
+    }
+
+    .logo-text {
+      font-family: -apple-system, 'SF Pro Text', 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #262626;
+      letter-spacing: -0.01em;
+    }
+
+    /* ─── Form card ─── */
+    .form-card {
+      width: 505px;
+    }
+
+    .form-body {
+      padding: 48px 40px;
+    }
+
+    .form-title {
+      font-size: 30px;
+      font-weight: 600;
+      color: #363e43;
+      margin-bottom: 24px;
+      line-height: 36px;
+    }
+
+    /* ─── Fields group ─── */
+    .fields-group {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .field-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: #334155;
+      margin-bottom: 7px;
+      line-height: 21px;
+    }
+
+    .field-label-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 7px;
+    }
+
+    .field-label-row .field-label {
+      margin-bottom: 0;
+    }
+
+    .forgot-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: #0088ff;
+      text-decoration: none;
+      white-space: nowrap;
+      line-height: 20px;
+    }
+
+    .forgot-link:hover {
+      text-decoration: underline;
+    }
+
+    .input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon-right {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+
+    .field input {
+      width: 100%;
+      height: 38px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 0 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15.75px;
+      font-weight: 400;
+      color: #1e293b;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      box-shadow: 0 1px 2px rgba(18, 18, 23, 0.05);
+    }
+
+    .field input.has-icon-right {
+      padding-right: 40px;
+    }
+
+    .field input::placeholder {
+      color: #64748b;
+    }
+
+    .field input:focus {
+      border-color: #0088ff;
+      box-shadow: 0 0 0 3px rgba(0, 136, 255, 0.12);
+    }
+
+    /* ─── Action buttons ─── */
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .btn {
+      width: 100%;
+      height: 38px;
+      border-radius: 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15.75px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+
+    .btn:hover { opacity: 0.9; }
+    .btn:active { transform: scale(0.99); }
+
+    .btn-primary {
+      background: #0088ff;
+      border: 1px solid #0088ff;
+      color: #ffffff;
+    }
+
+    .btn-google {
+      background: #f1f5f9;
+      border: 1px solid #f1f5f9;
+      color: #475569;
+    }
+
+    .sign-in-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sign-in-row span {
+      font-size: 14px;
+      font-weight: 400;
+      color: #64748b;
+      line-height: 20px;
+    }
+
+    .sign-in-row a {
+      font-size: 14px;
+      font-weight: 500;
+      color: #0088ff;
+      text-decoration: none;
+      line-height: 20px;
+    }
+
+    .sign-in-row a:hover { text-decoration: underline; }
+
+    /* ─── Card footer ─── */
+    .form-footer {
+      padding: 0 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+    }
+
+    .form-footer p {
+      font-size: 14px;
+      font-weight: 400;
+      color: #334155;
+      line-height: 20px;
+    }
+
+    .form-footer a {
+      color: #334155;
+      text-decoration: underline;
+    }
+
+    .form-footer a:hover {
+      color: #0088ff;
+    }
+
+    /* ─── Right panel ─── */
+    .right-panel {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .right-panel::before,
+    .right-panel::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .right-panel::before {
+      top: 0;
+      height: 160px;
+      background: linear-gradient(to bottom, #70bcff 0%, rgba(112,188,255,0) 100%);
+    }
+
+    .right-panel::after {
+      bottom: 0;
+      height: 160px;
+      background: linear-gradient(to top, #ffffff 0%, rgba(255,255,255,0) 100%);
+    }
+
+    /* ─── Graphic frame — Figma: x=799, y=-140 on 1440px canvas ─── */
+    .graphic-frame {
+      position: absolute;
+      top: -140px;
+      left: 154px;
+      display: flex;
+      gap: 16px;
+    }
+
+    .graphic-col {
+      display: flex;
+      flex-direction: column;
+      will-change: transform;
+    }
+
+    .col-1 { animation: scrollUp 60s linear infinite; }
+    .col-2 { animation: scrollUp 76s linear infinite; animation-delay: -18s; }
+    .col-3 { animation: scrollUp 68s linear infinite; animation-delay: -36s; }
+
+    @keyframes scrollUp {
+      0%   { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+
+    /* ─── Template cards — Figma: radius 12, shadow rgba(0,0,0,0.10) ─── */
+    .thumb-card {
+      width: 272px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      flex-shrink: 0;
+      margin-bottom: 16px;
+      display: flex;
+    }
+
+    /* Col 1 heights — Figma: 382 / 272 / 380 */
+    .col-1 .thumb-card:nth-child(1),
+    .col-1 .thumb-card:nth-child(4) { height: 382px; }
+    .col-1 .thumb-card:nth-child(2),
+    .col-1 .thumb-card:nth-child(5) { height: 272px; }
+    .col-1 .thumb-card:nth-child(3),
+    .col-1 .thumb-card:nth-child(6) { height: 380px; }
+
+    /* Col 2 heights — Figma: 305 / 271 / 481 */
+    .col-2 .thumb-card:nth-child(1),
+    .col-2 .thumb-card:nth-child(4) { height: 305px; }
+    .col-2 .thumb-card:nth-child(2),
+    .col-2 .thumb-card:nth-child(5) { height: 271px; }
+    .col-2 .thumb-card:nth-child(3),
+    .col-2 .thumb-card:nth-child(6) { height: 481px; }
+
+    /* Col 3 heights — Figma: 392 / 382 / 271 */
+    .col-3 .thumb-card:nth-child(1),
+    .col-3 .thumb-card:nth-child(4) { height: 392px; }
+    .col-3 .thumb-card:nth-child(2),
+    .col-3 .thumb-card:nth-child(5) { height: 382px; }
+    .col-3 .thumb-card:nth-child(3),
+    .col-3 .thumb-card:nth-child(6) { height: 271px; }
+
+    .thumb-card img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center top;
+      flex-shrink: 0;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- Left: Form -->
+    <div class="left-panel">
+      <div class="logo">
+        <div class="logo-icon"></div>
+        <span class="logo-text">ConverCore</span>
+      </div>
+
+      <div class="form-card">
+        <div class="form-body">
+          <h1 class="form-title">Sign up</h1>
+
+          <div class="fields-group">
+            <!-- Email -->
+            <div class="field">
+              <label class="field-label" for="email">Email</label>
+              <div class="input-wrap">
+                <input id="email" type="email" placeholder="Enter your email address" autocomplete="email" />
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="field">
+              <div class="field-label-row">
+                <label class="field-label" for="password">Password</label>
+                <a class="forgot-link" href="#">Forgot your password?</a>
+              </div>
+              <div class="input-wrap">
+                <input id="password" type="password" placeholder="Enter your password" autocomplete="new-password" class="has-icon-right" />
+                <span class="input-icon-right" onclick="togglePw()">
+                  <svg id="eye-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M1.333 8S3.333 3.333 8 3.333 14.667 8 14.667 8 12.667 12.667 8 12.667 1.333 8 1.333 8z" stroke="#94a3b8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="8" cy="8" r="2" stroke="#94a3b8" stroke-width="1.2"/>
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="actions">
+            <button class="btn btn-primary" type="submit">Sign up</button>
+
+            <button class="btn btn-google" type="button">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15.68 8.182c0-.567-.05-1.112-.143-1.636H8v3.094h4.306a3.68 3.68 0 01-1.598 2.413v2.005h2.587c1.513-1.393 2.385-3.444 2.385-5.876z" fill="#4285F4"/>
+                <path d="M8 16c2.16 0 3.97-.716 5.295-1.942l-2.587-2.005c-.716.48-1.633.763-2.708.763-2.083 0-3.847-1.407-4.476-3.297H.847v2.07A8 8 0 008 16z" fill="#34A853"/>
+                <path d="M3.524 9.519A4.817 4.817 0 013.27 8c0-.527.09-1.039.254-1.519V4.41H.847A8.002 8.002 0 000 8c0 1.292.31 2.514.847 3.59l2.677-2.07z" fill="#FBBC05"/>
+                <path d="M8 3.182c1.174 0 2.228.404 3.057 1.196l2.294-2.294C11.965.79 10.155 0 8 0A8 8 0 00.847 4.41l2.677 2.07C4.153 4.59 5.917 3.183 8 3.183z" fill="#EA4335"/>
+              </svg>
+              Continue with Google
+            </button>
+
+            <div class="sign-in-row">
+              <span>Already have an account?</span>
+              <a href="#">Sign in</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-footer">
+          <p>By sign up, you agree to our <a href="#">Terms &amp; Conditions</a> and <a href="#">Privacy Policy</a></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Animated graphic — 3 columns per Figma node 962:37648 -->
+    <div class="right-panel">
+      <div class="graphic-frame">
+
+        <!-- Col 1: fashion-home / furry-friend / business-backpack -->
+        <div class="graphic-col col-1">
+          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_1_746_26208.png" alt="" /></div>
+          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_4_746_26218.png" alt="" /></div>
+          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_7_746_28548.png" alt="" /></div>
+          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_1_746_26208.png" alt="" /></div>
+          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_4_746_26218.png" alt="" /></div>
+          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_7_746_28548.png" alt="" /></div>
+        </div>
+
+        <!-- Col 2: cat-toys / template / template-tall -->
+        <div class="graphic-col col-2">
+          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_2_746_26211.png" alt="" /></div>
+          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_5_746_26221.png" alt="" /></div>
+          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_8_746_28666.png" alt="" /></div>
+          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_2_746_26211.png" alt="" /></div>
+          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_5_746_26221.png" alt="" /></div>
+          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_8_746_28666.png" alt="" /></div>
+        </div>
+
+        <!-- Col 3: template / template-warm / template-small -->
+        <div class="graphic-col col-3">
+          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_3_746_26214.png" alt="" /></div>
+          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_6_746_26224.png" alt="" /></div>
+          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_9_746_28670.png" alt="" /></div>
+          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_3_746_26214.png" alt="" /></div>
+          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_6_746_26224.png" alt="" /></div>
+          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_9_746_28670.png" alt="" /></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function togglePw() {
+      const input = document.getElementById('password');
+      const icon = document.getElementById('eye-icon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.innerHTML = `
+          <path d="M2 2l12 12M6.712 6.727A3 3 0 009.292 9.28M8 4c4.418 0 7 4 7 4s-.928 1.593-2.288 2.821M1 8s2.582-4 7-4c.474 0 .932.05 1.375.14" stroke="#94a3b8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>`;
+      } else {
+        input.type = 'password';
+        icon.innerHTML = `
+          <path d="M1.333 8S3.333 3.333 8 3.333 14.667 8 14.667 8 12.667 12.667 8 12.667 1.333 8 1.333 8z" stroke="#94a3b8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="8" cy="8" r="2" stroke="#94a3b8" stroke-width="1.2"/>`;
+      }
+    }
+  </script>
+</body>
+</html>
