@@ -1,6 +1,6 @@
 # Handoff Document — Onboarding Flow Brainstorm
 **Project:** Web Builder / Store Builder SaaS
-**Ngày cập nhật:** 2026-04-26
+**Ngày cập nhật:** 2026-04-26 (session 3)
 **Mục đích file:** Tóm tắt toàn bộ cuộc trò chuyện để agent mới tiếp tục mà không cần đọc lại lịch sử
 
 ---
@@ -96,40 +96,65 @@ Luồng đã thống nhất theo thứ tự:
 
 ## 5. Files đã tạo
 
-### `signup.html` ← **Live implementation**
-Màn hình Sign up đã implement. Split layout: form trái + animated template gallery phải.
-Assets dùng: `assets/signup-thumbs/` (9 thumbnails), `assets/figma-graphic-cropped/`.
+### `signup.html` ← **Live implementation — TẤT CẢ 4 SCREENS trong 1 file**
 
-### `onboarding-step1.html` ← **Live implementation**
-Màn hình Step 1 — chọn Business Model. Đã implement đầy đủ:
-- 4 cards: General Dropship, Niche Store, Print-on-Demand, Other
-- Selection state với checkmark animation
-- Continue button disabled cho đến khi chọn
-- Assets: `assets/business-model-thumbs/` (4 ảnh: general-dropship.png, niche-dropship.png, print-on-demand.png, other.png)
+Toàn bộ onboarding flow đã được consolidate vào file này. Navigation giữa các screen bằng CSS opacity transition (không reload trang). Thứ tự:
 
-**Copy đã được confirm:**
+**Screen 1 — Sign Up** (`#sign-up-screen`)
+- Split layout: form trái + animated template gallery phải (rotate -20deg, 3 cột scroll độc lập)
+- Prototype auto-fill: focus vào email/password → điền sẵn `rashford99@gmail.com / Rashford99@`
+- Sign up button → chuyển sang Business Model screen
 
-| Card | Tagline | Description |
-|------|---------|-------------|
-| General Dropship | Sell anything. Move fast. | Sell across any category, built for speed. |
-| Niche Store | Go deep. Build a brand. | One niche, all in. Built for brand loyalty. |
-| Print-on-Demand | Your design. Printed on demand. | Your designs on products — no inventory needed. |
-| Other | Something else in mind. | Not sure which model fits? We'll keep it flexible. |
+**Screen 2 — Business Model** (`#business-model-screen`, STEP 1 OF 3, progress 33%)
+- 4 cards: General Dropship (Most Popular badge), Niche Dropship, Print-on-Demand, Other
+- Radio group với keyboard navigation (Arrow keys)
+- Continue → chuyển sang Store Name, lưu vào `sessionStorage['convercore.selectedBusinessModel']`
 
-### `loading-screen-spec.md`
-Spec đầy đủ cho loading screen, bao gồm layout suggestion. Dùng khi muốn có reference layout cụ thể.
+**Screen 3 — Store Name** (`#store-name-screen`, STEP 2 OF 3, progress 67%)
+- Input: placeholder "Enter your store name", maxlength 64
+- AI suggestion chips (pill shape, `border-radius: 100px`) — 5 chips, content thay đổi theo business model đã chọn
+  - General Dropship: "Shop siêu rẻ", "Cửa hàng thông minh", "Cửa hàng tốt", "Thế giới 247", "Đồ gia dụng thông minh"
+  - Chip click → fill input (replace)
+- Validate ≥ 2 ký tự. Continue → `sessionStorage['convercore.storeName']`, chuyển sang Business Goal
 
-### `loading-screen-spec-v2.md` ← **Dùng cái này để handoff cho AI designer**
-Spec layout-free — chỉ có goal, content, behavior, script. Dùng khi muốn AI designer tự quyết định layout.
+**Screen 4 — Business Goal** (`#business-goal-screen`, STEP 3 OF 3, progress 90%)
+- Textarea height 88px (không resize), placeholder "Enter your business goal"
+- AI suggestion chips (rounded rectangle, `border-radius: 12px`) — 6 chips trong grid 3 cột:
+  - "Launch product pages faster", "Test and find winning products", "Turn followers into buyers"
+  - "Build a brand people come back to", "Increase conversion rate", "Increase average order value"
+- **Multi-select logic:** Click chip → append ", " vào textarea, chip hiện `is-selected` state (xanh). Click lại → remove. User gõ tay → clear chip selection. Cmd+Enter để submit.
+- Continue → `sessionStorage['convercore.businessGoal']` *(chưa có screen tiếp theo)*
 
-Nội dung v2 gồm:
-- Mục đích màn hình
-- 4 thành phần bắt buộc (Brand context, Tiến trình tổng thể, Activity log, Reveal State)
-- Script 13 items đầy đủ cho Dropship
-- Micro-copy guidelines + bảng "tránh/dùng"
-- Timing table
-- Điều không làm
-- Edge cases (loading nhanh/chậm/lỗi)
+**JS architecture:**
+- `setActiveScreen(screenName)` — central navigator, nhận `'sign-up' | 'business-model' | 'store-name' | 'business-goal'`
+- `setupPrototypeFill()` — auto-fill signup form, cleanup `prototype-filled` class khi user edit
+- `setupBusinessModelSelection()` — radio card selection + keyboard nav
+- `renderSuggestionChips()` — re-render chips mỗi lần store-name screen active (vì chips phụ thuộc selectedBusinessModel)
+- `setupStoreNameScreen()` — input validation, chip fill
+- `setupBusinessGoalScreen()` — textarea + multi-select Set logic, chips rendered once at init
+
+### `onboarding-step1.html` ← **Deprecated — dùng signup.html thay thế**
+File cũ chỉ có Screen 2 (Business Model). Không xóa để tham khảo nếu cần tách file.
+
+### `loading-screen-spec-v3.md` ← **Spec mới nhất cho Loading Screen**
+Layout VEED-inspired: 3-card carousel + headline/subtitle dưới. Đây là v3 (v2 là activity log style).
+
+**3 phase labels đã confirm:**
+| Phase | Icon | Label |
+|-------|------|-------|
+| 1 | 🔍 | `Finding your template` |
+| 2 | ✏️ | `Customizing your store` |
+| 3 | ⚡ | `Boosting CR & AOV` |
+
+**Headline copy đã confirm:**
+- Headline: `We're creating your store`
+- Description: `Setting up your pages, layout, and conversion features — tailored to your goals.`
+- Subtitle: `This takes just a few seconds`
+
+**Completion state:** CR Score card xuất hiện sau phase 3. Score khác nhau theo business model (General Dropship: 84/100, Niche: 79/100, POD: 81/100, Other: 76/100). CTA: `View your store →`
+
+### `loading-screen-spec.md` / `loading-screen-spec-v2.md`
+Spec cũ hơn — v2 dùng activity log 13 items. Giữ để tham khảo.
 
 ### `store-screen-requirements.md` ← **Spec màn hình sau loading**
 Spec cho Store Screen — màn hình user xem store với CR highlights và hover tooltips.
@@ -202,61 +227,50 @@ assets/
 
 ---
 
-## 8. Onboarding Step 2 & 3 — Copy đã quyết định
+## 8. Onboarding Step 2 & 3 — Copy đã implement
 
-### Step 2 — Store Name
+### Step 2 — Store Name ✅ DONE
 
 **Title:** `What is your store name?`
-
 **Description:** `We'll use this to brand your store — logo, header, and more.`
-
-**Mục đích:** Hệ thống dùng tên này để cá nhân hóa logo và branding của store được gen ra.
+**Input placeholder:** `Enter your store name`
+**Figma nodes:** Header 1008-35094 | Main content 1008-35141 | Actions 1008-35105
 
 ---
 
-### Step 3 — Store Goal
+### Step 3 — Business Goal ✅ DONE
 
-**Title:** `What is your goal for your store?`
-
+**Title:** `What is your main goal?`
 **Description:** `We'll set up your store's layout and features to match this.`
+**Input placeholder:** `Enter your business goal`
+**Figma nodes:** Step indicator 1020-15017 | Header 1020-15023 | Frame 1020-15028 | Actions 1020-15063
 
-**Mục đích:** Hệ thống dùng goal này để config template, features, và defaults phù hợp.
-
-**UI:** Free-text input + 10 suggestion chips bên dưới (multi-select). User có thể gõ tự do hoặc click chọn nhanh.
-
-**10 Suggestion chips (theo thứ tự):**
+**6 Suggestion chips implemented (grid 3×2):**
 ```
-Test and find winning products
-Launch product pages faster
-Turn followers into buyers
-Capture more sales when posts go viral
-Increase conversion rate
-Increase average order value
-Build a brand people come back to
-Look and convert like a Shopify store
-Automate product content at scale
-Scale revenue without platform limits
+Launch product pages faster     | Test and find winning products  | Turn followers into buyers
+Build a brand people come back  | Increase conversion rate        | Increase average order value
 ```
 
-**Nguồn gốc chips:** Distill từ 4 target segment goals — mỗi chip chạm đúng 1 job-to-be-done thực tế của ít nhất 1 segment.
+*Lưu ý: Ban đầu spec có 10 chips, đã thu gọn còn 6 chip cốt lõi nhất để match Figma design và Hick's Law.*
 
 ---
 
 ## 9. Phần chưa làm — cần tiếp tục
 
-### A. Implement Step 2 — Store Name (`onboarding-step2.html`) ← **Tiếp theo**
-Copy đã có. Cần implement HTML theo design system hiện tại.
-- Text input với placeholder gợi ý (e.g. "e.g. Trendie, PawShop...")
-- Validation: không để trống
-- Continue button disabled khi input trống
+### A. Implement Loading Screen ← **TIẾP THEO — ưu tiên cao nhất**
+Spec đầy đủ tại `loading-screen-spec-v3.md`. Implement vào `signup.html` như Screen 5.
 
-### B. Implement Step 3 — Store Goal (`onboarding-step3.html`) ← **Tiếp theo**
-Copy và 10 chips đã có. Cần implement HTML:
-- Free-text input (optional hay required — cần quyết định)
-- 10 chips dạng toggle, multi-select
-- Chips được chọn → append vào input hoặc lưu riêng
+Key implementation notes:
+- 3-card carousel: active card scale 1.0 + shadow, side cards scale 0.85 + opacity 0.3-0.4
+- Slide animation: right → left, 400-500ms, `cubic-bezier(0.4, 0, 0.2, 1)`
+- Progress % per card: realtime count-up trong phase active, hiển thị 100% khi done
+- Timing: Phase 1 ~2s, Phase 2 ~3s, Phase 3 ~2.5s, tổng minimum 6s
+- Completion state: carousel fade out → CR Score card scale-in → count-up 0→84 trong 900ms → benchmark badge → CTA "View your store →"
+- Dynamic tagline khi Phase 3 active: *"Cài đặt checkout tối ưu, upsell logic, và trust signals..."*
+- Score theo business model: General 84/100, Niche 79/100, POD 81/100, Other 76/100
+- Business goal screen Continue button chưa có navigation → cần trỏ tới loading screen
 
-### C. CR Analysis cho Product Page (PDP) — ưu tiên cao
+### B. CR Analysis cho Product Page (PDP) — ưu tiên cao
 Đã audit Homepage xong. Cần tiếp tục với PDP (node `1:2` trong Figma file).
 Các element cần chú ý theo spec:
 - Price anchoring
