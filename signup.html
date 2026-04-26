@@ -6,7 +6,7 @@
   <title>Sign up — ConverCore</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after {
       box-sizing: border-box;
@@ -19,6 +19,33 @@
       height: 100%;
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       overflow: hidden;
+    }
+
+    body {
+      position: relative;
+      background: #eff7ff;
+    }
+
+    .screen {
+      position: absolute;
+      inset: 0;
+      transition: opacity 180ms ease, visibility 180ms ease;
+    }
+
+    .screen:not(.is-active) {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .screen.is-active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    body.is-business-model .graphic-track {
+      animation-play-state: paused;
     }
 
     /* ─── Page background ─── */
@@ -174,6 +201,11 @@
       box-shadow: 0 0 0 3px rgba(0, 136, 255, 0.12);
     }
 
+    .field input.prototype-filled {
+      background: #f8fafc;
+      color: #64748b;
+    }
+
     /* ─── Action buttons ─── */
     .actions {
       display: flex;
@@ -258,226 +290,760 @@
       color: #0088ff;
     }
 
-    /* ─── Right panel ─── */
+    /* ─── Right panel / Figma 962:37648 ─── */
     .right-panel {
-      flex: 1;
-      overflow: hidden;
+      flex: 1 1 auto;
+      min-width: 0;
       position: relative;
+      overflow: hidden;
     }
 
-    .right-panel::before,
-    .right-panel::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      right: 0;
-      z-index: 5;
-      pointer-events: none;
-    }
-
-    .right-panel::before {
-      top: 0;
-      height: 160px;
-      background: linear-gradient(to bottom, #70bcff 0%, rgba(112,188,255,0) 100%);
-    }
-
-    .right-panel::after {
-      bottom: 0;
-      height: 160px;
-      background: linear-gradient(to top, #ffffff 0%, rgba(255,255,255,0) 100%);
-    }
-
-    /* ─── Graphic frame — Figma: x=799, y=-140 on 1440px canvas ─── */
     .graphic-frame {
       position: absolute;
-      top: -140px;
-      left: 154px;
+      top: -139.582px;
+      left: 154.320px;
+      width: 847.897px;
+      height: 1089px;
       display: flex;
+      gap: 16px;
+      overflow: hidden;
+      transform: rotate(-20deg);
+      transform-origin: center center;
+    }
+
+    .graphic-row {
+      width: 271.966px;
+      flex: 0 0 auto;
+      overflow: hidden;
+    }
+
+    .graphic-row-1 {
+      height: 1066.188px;
+      margin-top: 11.406px;
+      --travel: 1082.188px;
+      --duration: 108s;
+      --delay: -14s;
+    }
+
+    .graphic-row-2 {
+      height: 1089px;
+      --travel: 1105px;
+      --duration: 118s;
+      --delay: -36s;
+    }
+
+    .graphic-row-3 {
+      height: 1077px;
+      margin-top: 6px;
+      --travel: 1093px;
+      --duration: 112s;
+      --delay: -52s;
+    }
+
+    .graphic-track {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      will-change: transform;
+      animation: scroll-up var(--duration) linear infinite;
+      animation-delay: var(--delay);
+    }
+
+    @keyframes scroll-up {
+      from {
+        transform: translateY(0);
+      }
+
+      to {
+        transform: translateY(calc(-1 * var(--travel)));
+      }
+    }
+
+    .graphic-card {
+      flex: 0 0 auto;
+      overflow: hidden;
+      border-radius: 12px;
+      background: #ffffff;
+      box-shadow: 0 1px 2px -1px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .graphic-card img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .card-fashion-home {
+      width: 271.966px;
+      height: 382.222px;
+    }
+
+    .card-furry-friend {
+      width: 271.966px;
+      height: 271.966px;
+    }
+
+    .card-business-backpack {
+      width: 271px;
+      height: 380px;
+    }
+
+    .card-cat-toys {
+      width: 271px;
+      height: 305px;
+    }
+
+    .card-swiftwatch-cosmos {
+      width: 271px;
+      height: 271px;
+    }
+
+    .card-soulie-print {
+      width: 271.966px;
+      height: 481px;
+    }
+
+    .card-little-angel {
+      width: 271px;
+      height: 392px;
+    }
+
+    .card-thermal-wear {
+      width: 271.966px;
+      height: 382px;
+    }
+
+    .card-muse {
+      width: 271px;
+      height: 271px;
+    }
+
+    .business-model-screen {
+      background: #eff7ff;
+      overflow-y: auto;
+      overflow-x: hidden;
+      isolation: isolate;
+    }
+
+    .business-model-shell {
+      width: min(1240px, calc(100vw - 80px));
+      min-height: 100%;
+      margin: 0 auto;
+      padding: 82px 0 72px;
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .business-model-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       gap: 16px;
     }
 
-    .graphic-col {
+    .business-model-step-label {
+      color: #0088ff;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 16px;
+      text-transform: uppercase;
+    }
+
+    .business-model-progress {
+      width: min(832px, 100%);
+      height: 6px;
+      display: flex;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .business-model-progress-value {
+      width: 33.333%;
+      background: #0088ff;
+      border-radius: 6px 0 0 6px;
+    }
+
+    .business-model-progress-rest {
+      flex: 1;
+      background: #e2e8f0;
+      border-radius: 0 6px 6px 0;
+    }
+
+    .business-model-content-stack {
       display: flex;
       flex-direction: column;
-      will-change: transform;
+      gap: 48px;
     }
 
-    .col-1 { animation: scrollUp 60s linear infinite; }
-    .col-2 { animation: scrollUp 76s linear infinite; animation-delay: -18s; }
-    .col-3 { animation: scrollUp 68s linear infinite; animation-delay: -36s; }
-
-    @keyframes scrollUp {
-      0%   { transform: translateY(0); }
-      100% { transform: translateY(-50%); }
-    }
-
-    /* ─── Template cards — Figma: radius 12, shadow rgba(0,0,0,0.10) ─── */
-    .thumb-card {
-      width: 272px;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-      flex-shrink: 0;
-      margin-bottom: 16px;
+    .business-model-header {
       display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+      text-align: center;
     }
 
-    /* Col 1 heights — Figma: 382 / 272 / 380 */
-    .col-1 .thumb-card:nth-child(1),
-    .col-1 .thumb-card:nth-child(4) { height: 382px; }
-    .col-1 .thumb-card:nth-child(2),
-    .col-1 .thumb-card:nth-child(5) { height: 272px; }
-    .col-1 .thumb-card:nth-child(3),
-    .col-1 .thumb-card:nth-child(6) { height: 380px; }
+    .business-model-header h1 {
+      color: #334155;
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 36px;
+    }
 
-    /* Col 2 heights — Figma: 305 / 271 / 481 */
-    .col-2 .thumb-card:nth-child(1),
-    .col-2 .thumb-card:nth-child(4) { height: 305px; }
-    .col-2 .thumb-card:nth-child(2),
-    .col-2 .thumb-card:nth-child(5) { height: 271px; }
-    .col-2 .thumb-card:nth-child(3),
-    .col-2 .thumb-card:nth-child(6) { height: 481px; }
+    .business-model-header p {
+      color: #64748b;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+    }
 
-    /* Col 3 heights — Figma: 392 / 382 / 271 */
-    .col-3 .thumb-card:nth-child(1),
-    .col-3 .thumb-card:nth-child(4) { height: 392px; }
-    .col-3 .thumb-card:nth-child(2),
-    .col-3 .thumb-card:nth-child(5) { height: 382px; }
-    .col-3 .thumb-card:nth-child(3),
-    .col-3 .thumb-card:nth-child(6) { height: 271px; }
+    .business-model-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 24px;
+    }
 
-    .thumb-card img {
+    .business-model-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: 2px;
+      border: 0;
+      border-radius: 12px;
+      background: #ffffff;
+      box-shadow: inset 0 0 0 1px #e2e8f0;
+      color: inherit;
+      text-align: left;
+      cursor: pointer;
+      transition: transform 150ms ease, box-shadow 150ms ease;
+      appearance: none;
+    }
+
+    .business-model-card:not(.is-selected):hover {
+      transform: translateY(-2px);
+      box-shadow: inset 0 0 0 1px #93c5fd, 0 12px 24px rgba(15, 23, 42, 0.08);
+    }
+
+    .business-model-card.is-selected {
+      box-shadow: inset 0 0 0 2px #0088ff, 0 1px 2px -1px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .business-model-card:focus-visible {
+      outline: 3px solid rgba(0, 136, 255, 0.2);
+      outline-offset: 4px;
+    }
+
+    .business-model-card-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      min-height: 23px;
+      display: inline-flex;
+      align-items: center;
+      padding: 3.5px 7px;
+      border-radius: 6px;
+      background: #b91c1c;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 16px;
+      opacity: 0;
+      transform: translateY(-2px);
+      transition: opacity 150ms ease, transform 150ms ease;
+      pointer-events: none;
+    }
+
+    .business-model-card.has-badge .business-model-card-badge {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .business-model-card-thumb {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 10px 10px 0 0;
+      overflow: hidden;
+      background: #e2e8f0;
+    }
+
+    .business-model-card-thumb img {
       width: 100%;
       height: 100%;
       display: block;
       object-fit: cover;
-      object-position: center top;
-      flex-shrink: 0;
+    }
+
+    .business-model-card-copy {
+      min-height: 105px;
+      padding: 14px 7px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .business-model-card-copy h2 {
+      color: #334155;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 24px;
+    }
+
+    .business-model-card-copy p {
+      color: #64748b;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 22.75px;
+      letter-spacing: -0.15px;
+    }
+
+    .business-model-footer {
+      display: flex;
+      justify-content: center;
+    }
+
+    .business-model-continue {
+      width: 180px;
+      height: 38.5px;
+      border: 1px solid #0088ff;
+      border-radius: 6px;
+      background: #0088ff;
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+      font-size: 15.75px;
+      font-weight: 500;
+      line-height: 19.06px;
+      cursor: pointer;
+      transition: opacity 150ms ease, transform 100ms ease;
+    }
+
+    .business-model-continue:hover:not(:disabled) {
+      opacity: 0.92;
+    }
+
+    .business-model-continue:active:not(:disabled) {
+      transform: scale(0.99);
+    }
+
+    .business-model-continue:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 1279px) {
+      .business-model-shell {
+        width: min(920px, calc(100vw - 64px));
+      }
+
+      .business-model-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 767px) {
+      .business-model-shell {
+        width: calc(100vw - 40px);
+        padding: 48px 0 24px;
+        gap: 32px;
+      }
+
+      .business-model-content-stack {
+        gap: 32px;
+      }
+
+      .business-model-header h1 {
+        font-size: 28px;
+      }
+
+      .business-model-header p {
+        max-width: 320px;
+      }
+
+      .business-model-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .business-model-footer {
+        position: sticky;
+        bottom: 0;
+        padding: 16px 0 max(24px, env(safe-area-inset-bottom));
+        background: linear-gradient(180deg, rgba(239, 247, 255, 0) 0%, #eff7ff 24%);
+      }
+
+      .business-model-continue {
+        width: 100%;
+      }
     }
 
   </style>
 </head>
 <body>
-  <div class="page">
+  <div class="screen signup-screen is-active" id="sign-up-screen">
+    <div class="page">
 
-    <!-- Left: Form -->
-    <div class="left-panel">
-      <div class="logo">
-        <div class="logo-icon"></div>
-        <span class="logo-text">ConverCore</span>
-      </div>
+      <!-- Left: Form -->
+      <div class="left-panel">
+        <div class="logo">
+          <div class="logo-icon"></div>
+          <span class="logo-text">ConverCore</span>
+        </div>
 
-      <div class="form-card">
-        <div class="form-body">
-          <h1 class="form-title">Sign up</h1>
+        <div class="form-card">
+          <div class="form-body">
+            <h1 class="form-title">Sign up</h1>
 
-          <div class="fields-group">
-            <!-- Email -->
-            <div class="field">
-              <label class="field-label" for="email">Email</label>
-              <div class="input-wrap">
-                <input id="email" type="email" placeholder="Enter your email address" autocomplete="email" />
+            <div class="fields-group">
+              <!-- Email -->
+              <div class="field">
+                <label class="field-label" for="email">Email</label>
+                <div class="input-wrap">
+                  <input id="email" type="email" placeholder="Enter your email address" autocomplete="email" />
+                </div>
+              </div>
+
+              <!-- Password -->
+              <div class="field">
+                <div class="field-label-row">
+                  <label class="field-label" for="password">Password</label>
+                  <a class="forgot-link" href="#">Forgot your password?</a>
+                </div>
+                <div class="input-wrap">
+                  <input id="password" type="password" placeholder="Enter your password" autocomplete="new-password" class="has-icon-right" />
+                  <span class="input-icon-right" onclick="togglePw()">
+                    <svg id="eye-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                      <path d="M1.333 8S3.333 3.333 8 3.333 14.667 8 14.667 8 12.667 12.667 8 12.667 1.333 8 1.333 8z" stroke="#94a3b8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <circle cx="8" cy="8" r="2" stroke="#94a3b8" stroke-width="1.2"/>
+                    </svg>
+                  </span>
+                </div>
               </div>
             </div>
 
-            <!-- Password -->
-            <div class="field">
-              <div class="field-label-row">
-                <label class="field-label" for="password">Password</label>
-                <a class="forgot-link" href="#">Forgot your password?</a>
-              </div>
-              <div class="input-wrap">
-                <input id="password" type="password" placeholder="Enter your password" autocomplete="new-password" class="has-icon-right" />
-                <span class="input-icon-right" onclick="togglePw()">
-                  <svg id="eye-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M1.333 8S3.333 3.333 8 3.333 14.667 8 14.667 8 12.667 12.667 8 12.667 1.333 8 1.333 8z" stroke="#94a3b8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <circle cx="8" cy="8" r="2" stroke="#94a3b8" stroke-width="1.2"/>
-                  </svg>
-                </span>
+            <!-- Actions -->
+            <div class="actions">
+              <button class="btn btn-primary" id="sign-up-button" type="button">Sign up</button>
+
+              <button class="btn btn-google" type="button">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M15.68 8.182c0-.567-.05-1.112-.143-1.636H8v3.094h4.306a3.68 3.68 0 01-1.598 2.413v2.005h2.587c1.513-1.393 2.385-3.444 2.385-5.876z" fill="#4285F4"/>
+                  <path d="M8 16c2.16 0 3.97-.716 5.295-1.942l-2.587-2.005c-.716.48-1.633.763-2.708.763-2.083 0-3.847-1.407-4.476-3.297H.847v2.07A8 8 0 008 16z" fill="#34A853"/>
+                  <path d="M3.524 9.519A4.817 4.817 0 013.27 8c0-.527.09-1.039.254-1.519V4.41H.847A8.002 8.002 0 000 8c0 1.292.31 2.514.847 3.59l2.677-2.07z" fill="#FBBC05"/>
+                  <path d="M8 3.182c1.174 0 2.228.404 3.057 1.196l2.294-2.294C11.965.79 10.155 0 8 0A8 8 0 00.847 4.41l2.677 2.07C4.153 4.59 5.917 3.183 8 3.183z" fill="#EA4335"/>
+                </svg>
+                Continue with Google
+              </button>
+
+              <div class="sign-in-row">
+                <span>Already have an account?</span>
+                <a href="#">Sign in</a>
               </div>
             </div>
           </div>
 
-          <!-- Actions -->
-          <div class="actions">
-            <button class="btn btn-primary" type="submit">Sign up</button>
+          <div class="form-footer">
+            <p>By sign up, you agree to our <a href="#">Terms &amp; Conditions</a> and <a href="#">Privacy Policy</a></p>
+          </div>
+        </div>
+      </div>
 
-            <button class="btn btn-google" type="button">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15.68 8.182c0-.567-.05-1.112-.143-1.636H8v3.094h4.306a3.68 3.68 0 01-1.598 2.413v2.005h2.587c1.513-1.393 2.385-3.444 2.385-5.876z" fill="#4285F4"/>
-                <path d="M8 16c2.16 0 3.97-.716 5.295-1.942l-2.587-2.005c-.716.48-1.633.763-2.708.763-2.083 0-3.847-1.407-4.476-3.297H.847v2.07A8 8 0 008 16z" fill="#34A853"/>
-                <path d="M3.524 9.519A4.817 4.817 0 013.27 8c0-.527.09-1.039.254-1.519V4.41H.847A8.002 8.002 0 000 8c0 1.292.31 2.514.847 3.59l2.677-2.07z" fill="#FBBC05"/>
-                <path d="M8 3.182c1.174 0 2.228.404 3.057 1.196l2.294-2.294C11.965.79 10.155 0 8 0A8 8 0 00.847 4.41l2.677 2.07C4.153 4.59 5.917 3.183 8 3.183z" fill="#EA4335"/>
-              </svg>
-              Continue with Google
-            </button>
+      <div class="right-panel" aria-hidden="true">
+        <div class="graphic-frame">
+          <div class="graphic-row graphic-row-1">
+            <div class="graphic-track">
+              <div class="graphic-card card-fashion-home">
+                <img src="assets/figma-graphic-cropped/962_37650.png" alt="" loading="lazy" />
+              </div>
+              <div class="graphic-card card-furry-friend">
+                <img src="assets/figma-graphic-cropped/962_37653.png" alt="" loading="lazy" />
+              </div>
+              <div class="graphic-card card-business-backpack">
+                <img src="assets/figma-graphic-cropped/962_37656.png" alt="" loading="lazy" />
+              </div>
+              <div class="graphic-card card-fashion-home">
+                <img src="assets/figma-graphic-cropped/962_37650.png" alt="" loading="lazy" />
+              </div>
+              <div class="graphic-card card-furry-friend">
+                <img src="assets/figma-graphic-cropped/962_37653.png" alt="" loading="lazy" />
+              </div>
+              <div class="graphic-card card-business-backpack">
+                <img src="assets/figma-graphic-cropped/962_37656.png" alt="" loading="lazy" />
+              </div>
+            </div>
+          </div>
 
-            <div class="sign-in-row">
-              <span>Already have an account?</span>
-              <a href="#">Sign in</a>
+          <div class="graphic-row graphic-row-2">
+            <div class="graphic-track">
+              <div class="graphic-card card-cat-toys">
+                <img src="assets/figma-graphic-cropped/962_37660.png" alt="" loading="lazy" />
+              </div>
+              <div class="graphic-card card-swiftwatch-cosmos">
+                <img src="assets/figma-graphic-cropped/962_37663.png" alt="" loading="lazy" />
+              </div>
+              <div class="graphic-card card-soulie-print">
+                <img src="assets/figma-graphic-cropped/962_37666.png" alt="" loading="lazy" />
+              </div>
+              <div class="graphic-card card-cat-toys">
+                <img src="assets/figma-graphic-cropped/962_37660.png" alt="" loading="lazy" />
+              </div>
+              <div class="graphic-card card-swiftwatch-cosmos">
+                <img src="assets/figma-graphic-cropped/962_37663.png" alt="" loading="lazy" />
+              </div>
+              <div class="graphic-card card-soulie-print">
+                <img src="assets/figma-graphic-cropped/962_37666.png" alt="" loading="lazy" />
+              </div>
+            </div>
+          </div>
+
+          <div class="graphic-row graphic-row-3">
+            <div class="graphic-track">
+              <div class="graphic-card card-little-angel">
+                <img src="assets/figma-graphic-cropped/962_39990.png" alt="" loading="lazy" />
+              </div>
+              <div class="graphic-card card-thermal-wear">
+                <img src="assets/figma-graphic-cropped/962_40108.png" alt="" loading="lazy" />
+              </div>
+              <div class="graphic-card card-muse">
+                <img src="assets/figma-graphic-cropped/962_40112.png" alt="" loading="lazy" />
+              </div>
+              <div class="graphic-card card-little-angel">
+                <img src="assets/figma-graphic-cropped/962_39990.png" alt="" loading="lazy" />
+              </div>
+              <div class="graphic-card card-thermal-wear">
+                <img src="assets/figma-graphic-cropped/962_40108.png" alt="" loading="lazy" />
+              </div>
+              <div class="graphic-card card-muse">
+                <img src="assets/figma-graphic-cropped/962_40112.png" alt="" loading="lazy" />
+              </div>
             </div>
           </div>
         </div>
-
-        <div class="form-footer">
-          <p>By sign up, you agree to our <a href="#">Terms &amp; Conditions</a> and <a href="#">Privacy Policy</a></p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Right: Animated graphic — 3 columns per Figma node 962:37648 -->
-    <div class="right-panel">
-      <div class="graphic-frame">
-
-        <!-- Col 1: fashion-home / furry-friend / business-backpack -->
-        <div class="graphic-col col-1">
-          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_1_746_26208.png" alt="" /></div>
-          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_4_746_26218.png" alt="" /></div>
-          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_7_746_28548.png" alt="" /></div>
-          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_1_746_26208.png" alt="" /></div>
-          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_4_746_26218.png" alt="" /></div>
-          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_7_746_28548.png" alt="" /></div>
-        </div>
-
-        <!-- Col 2: cat-toys / template / template-tall -->
-        <div class="graphic-col col-2">
-          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_2_746_26211.png" alt="" /></div>
-          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_5_746_26221.png" alt="" /></div>
-          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_8_746_28666.png" alt="" /></div>
-          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_2_746_26211.png" alt="" /></div>
-          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_5_746_26221.png" alt="" /></div>
-          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_8_746_28666.png" alt="" /></div>
-        </div>
-
-        <!-- Col 3: template / template-warm / template-small -->
-        <div class="graphic-col col-3">
-          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_3_746_26214.png" alt="" /></div>
-          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_6_746_26224.png" alt="" /></div>
-          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_9_746_28670.png" alt="" /></div>
-          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_3_746_26214.png" alt="" /></div>
-          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_6_746_26224.png" alt="" /></div>
-          <div class="thumb-card"><img src="assets/signup-thumbs/thumb_9_746_28670.png" alt="" /></div>
-        </div>
-
       </div>
     </div>
   </div>
 
+  <section class="screen business-model-screen" id="business-model-screen" aria-labelledby="business-model-title">
+    <div class="business-model-shell">
+      <div class="business-model-step">
+        <div class="business-model-step-label">STEP 1 OF 3</div>
+        <div class="business-model-progress" aria-hidden="true">
+          <div class="business-model-progress-value"></div>
+          <div class="business-model-progress-rest"></div>
+        </div>
+      </div>
+
+      <div class="business-model-content-stack">
+        <header class="business-model-header">
+          <h1 id="business-model-title">What is your business model?</h1>
+          <p>We'll set up the right template for your business model.</p>
+        </header>
+
+        <div class="business-model-grid" role="radiogroup" aria-label="Business model options">
+          <button class="business-model-card has-badge is-selected" data-model="general-dropship" role="radio" aria-checked="true" type="button">
+            <span class="business-model-card-badge">Most popular</span>
+            <div class="business-model-card-thumb">
+              <img src="assets/business-model-thumbs/general-dropship.png" alt="General Dropship store preview" loading="lazy" />
+            </div>
+            <div class="business-model-card-copy">
+              <h2>General Dropship</h2>
+              <p>Phù hợp để test sản phẩm nhiều ngành hàng, tối ưu cho tốc độ ra thị trường.</p>
+            </div>
+          </button>
+
+          <button class="business-model-card" data-model="niche-dropship" role="radio" aria-checked="false" type="button">
+            <div class="business-model-card-thumb">
+              <img src="assets/business-model-thumbs/niche-dropship.png" alt="Niche Dropship store preview" loading="lazy" />
+            </div>
+            <div class="business-model-card-copy">
+              <h2>Niche Dropship</h2>
+              <p>Thích hợp để xây thương hiệu lâu dài và loyal customer.</p>
+            </div>
+          </button>
+
+          <button class="business-model-card" data-model="print-on-demand" role="radio" aria-checked="false" type="button">
+            <div class="business-model-card-thumb">
+              <img src="assets/business-model-thumbs/print-on-demand.png" alt="Print-on-Demand store preview" loading="lazy" />
+            </div>
+            <div class="business-model-card-copy">
+              <h2>Print-on-Demand</h2>
+              <p>Bán sản phẩm in ấn mà không cần giữ hàng tồn kho.</p>
+            </div>
+          </button>
+
+          <button class="business-model-card" data-model="other" role="radio" aria-checked="false" type="button">
+            <div class="business-model-card-thumb">
+              <img src="assets/business-model-thumbs/other.png" alt="Other business model placeholder" loading="lazy" />
+            </div>
+            <div class="business-model-card-copy">
+              <h2>Other</h2>
+              <p>Chưa chắc về business model? Chúng tôi sẽ setup store linh hoạt nhất cho bạn</p>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <div class="business-model-footer">
+        <button class="business-model-continue" id="business-model-continue" type="button">Continue</button>
+      </div>
+    </div>
+  </section>
+
   <script>
-    function togglePw() {
+    const BUSINESS_MODEL_STORAGE_KEY = 'convercore.selectedBusinessModel';
+    const prototypeCredentials = {
+      email: 'rashford99@gmail.com',
+      password: 'Rashford99@'
+    };
+
+    let hasAppliedPrototypeFill = false;
+    let selectedBusinessModel = 'general-dropship';
+
+    function setPasswordVisible(isVisible) {
       const input = document.getElementById('password');
       const icon = document.getElementById('eye-icon');
-      if (input.type === 'password') {
-        input.type = 'text';
+
+      input.type = isVisible ? 'text' : 'password';
+
+      if (isVisible) {
         icon.innerHTML = `
           <path d="M2 2l12 12M6.712 6.727A3 3 0 009.292 9.28M8 4c4.418 0 7 4 7 4s-.928 1.593-2.288 2.821M1 8s2.582-4 7-4c.474 0 .932.05 1.375.14" stroke="#94a3b8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>`;
       } else {
-        input.type = 'password';
         icon.innerHTML = `
           <path d="M1.333 8S3.333 3.333 8 3.333 14.667 8 14.667 8 12.667 12.667 8 12.667 1.333 8 1.333 8z" stroke="#94a3b8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
           <circle cx="8" cy="8" r="2" stroke="#94a3b8" stroke-width="1.2"/>`;
       }
     }
+
+    function applyPrototypeFill() {
+      if (hasAppliedPrototypeFill) {
+        return;
+      }
+
+      const emailInput = document.getElementById('email');
+      const passwordInput = document.getElementById('password');
+
+      emailInput.value = prototypeCredentials.email;
+      passwordInput.value = prototypeCredentials.password;
+
+      emailInput.classList.add('prototype-filled');
+      passwordInput.classList.add('prototype-filled');
+
+      setPasswordVisible(true);
+      hasAppliedPrototypeFill = true;
+    }
+
+    function setupPrototypeFill() {
+      const emailInput = document.getElementById('email');
+      const passwordInput = document.getElementById('password');
+
+      [emailInput, passwordInput].forEach((input) => {
+        input.addEventListener('focus', applyPrototypeFill, { once: true });
+        input.addEventListener('pointerdown', applyPrototypeFill, { once: true });
+      });
+    }
+
+    function togglePw() {
+      const input = document.getElementById('password');
+      setPasswordVisible(input.type === 'password');
+    }
+
+    function syncBusinessModelSelection() {
+      const cards = document.querySelectorAll('.business-model-card');
+      const continueButton = document.getElementById('business-model-continue');
+      const hasSelection = Boolean(selectedBusinessModel);
+
+      cards.forEach((card) => {
+        const isSelected = card.dataset.model === selectedBusinessModel;
+        card.classList.toggle('is-selected', isSelected);
+        card.setAttribute('aria-checked', String(isSelected));
+      });
+
+      continueButton.disabled = !hasSelection;
+      continueButton.setAttribute('aria-disabled', String(!hasSelection));
+
+      if (hasSelection) {
+        sessionStorage.setItem(BUSINESS_MODEL_STORAGE_KEY, selectedBusinessModel);
+      } else {
+        sessionStorage.removeItem(BUSINESS_MODEL_STORAGE_KEY);
+      }
+    }
+
+    function setActiveScreen(screenName) {
+      const signUpScreen = document.getElementById('sign-up-screen');
+      const businessModelScreen = document.getElementById('business-model-screen');
+      const showBusinessModel = screenName === 'business-model';
+
+      signUpScreen.classList.toggle('is-active', !showBusinessModel);
+      businessModelScreen.classList.toggle('is-active', showBusinessModel);
+      document.body.classList.toggle('is-business-model', showBusinessModel);
+
+      if (showBusinessModel) {
+        syncBusinessModelSelection();
+      }
+    }
+
+    function selectBusinessModel(model) {
+      selectedBusinessModel = model;
+      syncBusinessModelSelection();
+    }
+
+    function moveBusinessModelSelection(step) {
+      const cards = Array.from(document.querySelectorAll('.business-model-card'));
+      const currentIndex = cards.findIndex((card) => card.dataset.model === selectedBusinessModel);
+      const nextIndex = (currentIndex + step + cards.length) % cards.length;
+      const nextCard = cards[nextIndex];
+
+      selectBusinessModel(nextCard.dataset.model);
+      nextCard.focus();
+    }
+
+    function handleSignUpClick() {
+      selectedBusinessModel = 'general-dropship';
+      syncBusinessModelSelection();
+      setActiveScreen('business-model');
+    }
+
+    function handleContinueClick() {
+      if (!selectedBusinessModel) {
+        return;
+      }
+
+      sessionStorage.setItem(BUSINESS_MODEL_STORAGE_KEY, selectedBusinessModel);
+    }
+
+    function setupBusinessModelSelection() {
+      const cards = Array.from(document.querySelectorAll('.business-model-card'));
+      const continueButton = document.getElementById('business-model-continue');
+      const signUpButton = document.getElementById('sign-up-button');
+
+      signUpButton.addEventListener('click', handleSignUpClick);
+
+      cards.forEach((card) => {
+        card.addEventListener('click', () => {
+          selectBusinessModel(card.dataset.model);
+        });
+
+        card.addEventListener('keydown', (event) => {
+          if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+            event.preventDefault();
+            moveBusinessModelSelection(1);
+          }
+
+          if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+            event.preventDefault();
+            moveBusinessModelSelection(-1);
+          }
+        });
+      });
+
+      continueButton.addEventListener('click', handleContinueClick);
+      syncBusinessModelSelection();
+    }
+
+    setupPrototypeFill();
+    setupBusinessModelSelection();
   </script>
 </body>
 </html>
