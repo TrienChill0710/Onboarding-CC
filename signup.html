@@ -1053,6 +1053,8 @@
       --center-left: calc(50% - (var(--card-width) / 2));
       --left-card-left: calc(var(--center-left) - var(--card-width) - var(--card-gap) - var(--side-spill));
       --right-card-left: calc(var(--center-left) + var(--card-width) + var(--card-gap) + var(--side-spill));
+      --off-left-left: calc(var(--left-card-left) - var(--card-width) - var(--card-gap) - var(--side-spill));
+      --off-right-left: calc(var(--right-card-left) + var(--card-width) + var(--card-gap) + var(--side-spill));
       position: relative;
       width: min(1078px, 100%);
       height: 259px;
@@ -1128,6 +1130,28 @@
       top: var(--side-top-offset);
       z-index: 2;
       opacity: 1;
+      filter: none;
+      transform-origin: top left;
+      transform: rotate(10deg);
+      visibility: visible;
+    }
+
+    .lt-card--off-left {
+      left: var(--off-left-left);
+      top: var(--side-top-offset);
+      z-index: 1;
+      opacity: 0;
+      filter: none;
+      transform-origin: top right;
+      transform: rotate(-10deg);
+      visibility: visible;
+    }
+
+    .lt-card--off-right {
+      left: var(--off-right-left);
+      top: var(--side-top-offset);
+      z-index: 1;
+      opacity: 0;
       filter: none;
       transform-origin: top left;
       transform: rotate(10deg);
@@ -1713,7 +1737,7 @@
                 </div>
               </article>
 
-              <article class="lt-card lt-card--right" data-phase-index="2">
+              <article class="lt-card lt-card--off-right" data-phase-index="2">
                 <div class="lt-card-media">
                   <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect x="13" y="10" width="38" height="52" rx="7" fill="#D8E4FF"/>
@@ -1742,7 +1766,7 @@
                 </div>
               </article>
 
-              <article class="lt-card lt-card--left" data-phase-index="1">
+              <article class="lt-card lt-card--right" data-phase-index="1">
                 <div class="lt-card-media">
                   <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect x="13" y="10" width="38" height="52" rx="7" fill="#D8E4FF"/>
@@ -2065,14 +2089,17 @@
       { key: 'boost', title: 'Boosting CR & AOV', duration: 8000 },
     ];
 
+    const LOADING_SLIDE_DURATION = 560;
+
     const LOADING_LAYOUTS = [
-      { left: 1, center: 0, right: 2 },
-      { left: 2, center: 1, right: 0 },
-      { left: 0, center: 2, right: 1 },
+      ['center', 'right', 'off-right'],
+      ['left', 'center', 'right'],
+      ['off-left', 'left', 'center'],
     ];
 
     const loadingTemplateState = {
       activeIndex: 0,
+      layoutIndex: 0,
       progresses: [0, 0, 0],
     };
 
@@ -2151,26 +2178,18 @@
 
     function renderLoadingTemplateState() {
       const cards = Array.from(document.querySelectorAll('.lt-card'));
-      const layout = LOADING_LAYOUTS[loadingTemplateState.activeIndex] || LOADING_LAYOUTS[0];
+      const layout = LOADING_LAYOUTS[loadingTemplateState.layoutIndex] || LOADING_LAYOUTS[0];
 
       cards.forEach((card) => {
         const phaseIndex = Number(card.dataset.phaseIndex);
         const progress = Math.max(0, Math.min(100, Math.round(loadingTemplateState.progresses[phaseIndex] || 0)));
         const valueEl = card.querySelector('.lt-progress-value');
         const barEl = card.querySelector('.lt-progress-bar');
+        const slot = layout[phaseIndex] || 'hidden';
 
-        card.classList.remove('lt-card--left', 'lt-card--center', 'lt-card--right', 'lt-card--hidden');
+        card.classList.remove('lt-card--left', 'lt-card--center', 'lt-card--right', 'lt-card--off-left', 'lt-card--off-right', 'lt-card--hidden');
         card.classList.toggle('is-started', progress > 0);
-
-        if (layout.center === phaseIndex) {
-          card.classList.add('lt-card--center');
-        } else if (layout.left === phaseIndex) {
-          card.classList.add('lt-card--left');
-        } else if (layout.right === phaseIndex) {
-          card.classList.add('lt-card--right');
-        } else {
-          card.classList.add('lt-card--hidden');
-        }
+        card.classList.add(`lt-card--${slot}`);
 
         valueEl.textContent = `${progress}%`;
         barEl.style.width = `${progress}%`;
@@ -2192,6 +2211,16 @@
         clearTimeout(loadingTemplateRestartTimeout);
         loadingTemplateRestartTimeout = null;
       }
+    }
+
+    function transitionLoadingLayout(nextIndex, onDone) {
+      loadingTemplateState.layoutIndex = nextIndex;
+      renderLoadingTemplateState();
+
+      loadingTemplateRestartTimeout = setTimeout(() => {
+        loadingTemplateRestartTimeout = null;
+        onDone();
+      }, LOADING_SLIDE_DURATION);
     }
 
     function runLoadingPhase(index) {
@@ -2224,15 +2253,12 @@
         if (index < LOADING_PHASES.length - 1) {
           loadingTemplateTimeout = setTimeout(() => {
             loadingTemplateTimeout = null;
-            runLoadingPhase(index + 1);
+            transitionLoadingLayout(index + 1, () => {
+              runLoadingPhase(index + 1);
+            });
           }, 320);
           return;
         }
-
-        loadingTemplateRestartTimeout = setTimeout(() => {
-          loadingTemplateRestartTimeout = null;
-          startLoadingTemplateSequence();
-        }, 800);
       }
 
       loadingTemplateFrame = requestAnimationFrame(tick);
@@ -2241,6 +2267,7 @@
     function startLoadingTemplateSequence() {
       stopLoadingTemplateSequence();
       loadingTemplateState.activeIndex = 0;
+      loadingTemplateState.layoutIndex = 0;
       loadingTemplateState.progresses = [0, 0, 0];
       renderLoadingTemplateState();
       runLoadingPhase(0);
