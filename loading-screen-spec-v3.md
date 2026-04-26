@@ -75,13 +75,13 @@ Mỗi card có **3 thành phần** để match với card size nhỏ:
 | Element | Content |
 |---------|---------|
 | Icon | ✏️ Pen / edit icon |
-| Label | `Applying your brand` |
+| Label | `Customizing your store` |
 | Progress | `0% → 100%` |
 
 **Dynamic tagline khi Phase 2 active** (hiển thị dưới carousel):
 > `Áp dụng tên thương hiệu và mục tiêu kinh doanh của bạn vào store`
 
-*Backup label nếu card quá nhỏ:* `Your brand` · `Brand & goals`
+*Backup label nếu card quá nhỏ:* `Customizing` · `Your store`
 
 ---
 
@@ -109,6 +109,25 @@ Hiển thị ngay dưới carousel, fade in khi card 3 activate, fade out khi co
 - Font: Bold, large (display size)
 - Color: Primary dark
 - Không có emoji/sparkle — giữ clean, confident
+
+**Description:** `Setting up your pages, layout, and conversion features — tailored to your goals.`
+- Vị trí: ngay dưới headline, trước subtitle
+- Font: Regular, nhỏ hơn headline ~30%, lớn hơn subtitle ~15%
+- Color: Secondary — đậm hơn subtitle, nhạt hơn headline
+- Luôn hiển thị, không thay đổi theo phase
+- Mục đích: trả lời ngay câu hỏi "đang làm gì?" — bridging giữa headline trừu tượng và 3 card cụ thể bên dưới
+- Không được dài quá 12 từ — loading screen, user không đọc nhiều
+- **Không dùng:** "AI-powered", "magic", "amazing" — giữ tone factual, confident
+
+**Variants (nếu cần personalize theo business model):**
+| Business Model | Description |
+|----------------|-------------|
+| General Dropship | `Setting up your pages, layout, and conversion features — tailored to your goals.` |
+| Niche Dropship | `Building your niche store with layouts and features matched to your brand.` |
+| Print-on-Demand | `Assembling your store with print-ready pages and conversion features.` |
+| Other | `Configuring your store's pages, layout, and conversion tools.` |
+
+*Default (khi không có business model):* Dùng variant General Dropship.
 
 **Subtitle:** `This takes just a few seconds`
 - Font: Regular, nhỏ hơn headline ~40%
