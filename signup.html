@@ -998,6 +998,381 @@
       }
     }
 
+    /* ─── Loading Template Screen ─── */
+    .loading-template-screen {
+      background: #eff7ff;
+      overflow-y: auto;
+      overflow-x: hidden;
+      isolation: isolate;
+    }
+
+    .lt-shell {
+      width: min(1240px, calc(100vw - 80px));
+      min-height: 100%;
+      margin: 0 auto;
+      padding: 164px 0 72px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .lt-main {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .lt-stage {
+      width: 100%;
+      min-height: 470px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 48px;
+    }
+
+    .lt-carousel-frame {
+      width: 100%;
+      height: 260px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      z-index: 2;
+    }
+
+    .lt-card-group {
+      --card-width: 311.75px;
+      --card-height: 205px;
+      --card-gap: 21px;
+      --side-spill: 35.6px;
+      --side-top-offset: 1px;
+      --center-left: calc(50% - (var(--card-width) / 2));
+      --left-card-left: calc(var(--center-left) - var(--card-width) - var(--card-gap) - var(--side-spill));
+      --right-card-left: calc(var(--center-left) + var(--card-width) + var(--card-gap) + var(--side-spill));
+      --off-left-left: calc(var(--left-card-left) - var(--card-width) - var(--card-gap) - var(--side-spill));
+      --off-right-left: calc(var(--right-card-left) + var(--card-width) + var(--card-gap) + var(--side-spill));
+      position: relative;
+      width: min(1078px, 100%);
+      height: 259px;
+      flex: 0 0 auto;
+    }
+
+    .lt-fade {
+      position: absolute;
+      top: 0;
+      width: min(488px, 39.36%);
+      height: 470px;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .lt-fade-left {
+      left: 0;
+      background: linear-gradient(90deg, #eff7ff 0%, #eff7ff 55.3%, rgba(239, 247, 255, 0) 100%);
+    }
+
+    .lt-fade-right {
+      right: 0;
+      background: linear-gradient(90deg, rgba(239, 247, 255, 0) 0%, #eff7ff 44.7%, #eff7ff 100%);
+    }
+
+    .lt-card {
+      position: absolute;
+      top: 0;
+      width: var(--card-width);
+      min-height: var(--card-height);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      padding: 21px;
+      border: 1px solid rgba(0, 74, 198, 0.2);
+      border-radius: 12px;
+      background: #ffffff;
+      box-shadow: 0 1px 2px -1px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1);
+      transform-origin: top center;
+      will-change: transform, opacity;
+      transition:
+        left 560ms cubic-bezier(0.22, 1, 0.36, 1),
+        top 560ms cubic-bezier(0.22, 1, 0.36, 1),
+        transform 560ms cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 360ms ease,
+        filter 360ms ease,
+        visibility 360ms ease;
+    }
+
+    .lt-card--center {
+      left: var(--center-left);
+      z-index: 3;
+      opacity: 1;
+      filter: none;
+      transform: rotate(0deg);
+      visibility: visible;
+    }
+
+    .lt-card--left {
+      left: var(--left-card-left);
+      top: var(--side-top-offset);
+      z-index: 2;
+      opacity: 1;
+      filter: none;
+      transform-origin: top right;
+      transform: rotate(-10deg);
+      visibility: visible;
+    }
+
+    .lt-card--right {
+      left: var(--right-card-left);
+      top: var(--side-top-offset);
+      z-index: 2;
+      opacity: 1;
+      filter: none;
+      transform-origin: top left;
+      transform: rotate(10deg);
+      visibility: visible;
+    }
+
+    .lt-card--off-left {
+      left: var(--off-left-left);
+      top: var(--side-top-offset);
+      z-index: 1;
+      opacity: 0;
+      filter: none;
+      transform-origin: top right;
+      transform: rotate(-10deg);
+      visibility: visible;
+    }
+
+    .lt-card--off-right {
+      left: var(--off-right-left);
+      top: var(--side-top-offset);
+      z-index: 1;
+      opacity: 0;
+      filter: none;
+      transform-origin: top left;
+      transform: rotate(10deg);
+      visibility: visible;
+    }
+
+    .lt-card--hidden {
+      left: var(--center-left);
+      z-index: 1;
+      opacity: 0;
+      visibility: hidden;
+      filter: saturate(0.8);
+      transform: translateY(12px) scale(0.9);
+    }
+
+    .lt-card-media {
+      width: 80px;
+      height: 80px;
+      flex: 0 0 auto;
+    }
+
+    .lt-card-media svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .lt-card-title {
+      color: #191b23;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 24px;
+      text-align: center;
+    }
+
+    .lt-card-progress {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .lt-progress-meta {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .lt-progress-label,
+    .lt-progress-value {
+      color: #64748b;
+      font-size: 12px;
+      line-height: 16px;
+    }
+
+    .lt-progress-label {
+      font-weight: 400;
+      text-transform: uppercase;
+    }
+
+    .lt-progress-value {
+      font-weight: 700;
+      text-align: right;
+      min-width: 28px;
+    }
+
+    .lt-card.is-started .lt-progress-value {
+      color: #0088ff;
+    }
+
+    .lt-progress-track {
+      width: 100%;
+      height: 6px;
+      border-radius: 6px;
+      background: #e2e8f0;
+      overflow: hidden;
+    }
+
+    .lt-progress-bar {
+      width: 0%;
+      height: 100%;
+      border-radius: 6px;
+      background: #0088ff;
+      transition: width 120ms linear;
+    }
+
+    .lt-header {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .lt-title-row {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3.5px;
+      flex-wrap: wrap;
+    }
+
+    .lt-title {
+      color: #334155;
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 36px;
+      text-align: center;
+    }
+
+    .lt-title-accent {
+      color: #0088ff;
+    }
+
+    .lt-title-sparkles {
+      width: 30px;
+      height: 30px;
+      flex: 0 0 auto;
+      color: #0088ff;
+    }
+
+    .lt-subtitle {
+      color: #64748b;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      text-align: center;
+    }
+
+    @media (max-width: 1279px) {
+      .lt-shell {
+        width: min(960px, calc(100vw - 64px));
+        padding-top: 136px;
+      }
+
+      .lt-stage {
+        min-height: 432px;
+        gap: 42px;
+      }
+
+      .lt-card-group {
+        --card-width: 284px;
+        --card-height: 196px;
+        --side-spill: 34.05px;
+      }
+
+      .lt-fade {
+        width: min(378px, 39.36%);
+        height: 432px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .loading-template-screen {
+        overflow-y: auto;
+      }
+
+      .lt-shell {
+        width: calc(100vw - 40px);
+        padding: 80px 0 32px;
+      }
+
+      .lt-main {
+        gap: 36px;
+      }
+
+      .lt-stage {
+        min-height: 356px;
+        gap: 28px;
+      }
+
+      .lt-carousel-frame {
+        height: 232px;
+      }
+
+      .lt-card-group {
+        --card-width: min(248px, calc(100vw - 96px));
+        --card-height: 188px;
+        --side-spill: 32.65px;
+        height: 232px;
+      }
+
+      .lt-fade {
+        width: 27%;
+        height: 356px;
+      }
+
+      .lt-card {
+        padding: 18px;
+        gap: 12px;
+      }
+
+      .lt-card-media {
+        width: 72px;
+        height: 72px;
+      }
+
+      .lt-card-title {
+        font-size: 15px;
+      }
+
+      .lt-title {
+        font-size: 26px;
+        line-height: 32px;
+      }
+
+      .lt-title-sparkles {
+        width: 24px;
+        height: 24px;
+      }
+
+      .lt-subtitle {
+        max-width: 320px;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -1324,6 +1699,122 @@
     </div>
   </section>
 
+  <section class="screen loading-template-screen" id="loading-template-screen" aria-labelledby="loading-template-title">
+    <div class="lt-shell">
+      <div class="lt-main">
+        <div class="lt-stage">
+          <div class="lt-fade lt-fade-left" aria-hidden="true"></div>
+          <div class="lt-fade lt-fade-right" aria-hidden="true"></div>
+
+          <div class="lt-carousel-frame" aria-hidden="true">
+            <div class="lt-card-group" id="lt-card-group">
+              <article class="lt-card lt-card--center" data-phase-index="0">
+                <div class="lt-card-media">
+                  <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="13" y="10" width="38" height="52" rx="7" fill="#D8E4FF"/>
+                    <rect x="13" y="10" width="38" height="10" rx="7" fill="#4666AF"/>
+                    <rect x="18" y="15" width="4" height="2.5" rx="1.25" fill="#AFC3F4"/>
+                    <rect x="25" y="15" width="4" height="2.5" rx="1.25" fill="#AFC3F4"/>
+                    <rect x="32" y="15" width="4" height="2.5" rx="1.25" fill="#AFC3F4"/>
+                    <rect x="18" y="26" width="13" height="13" rx="3" fill="#6D94DC"/>
+                    <rect x="18" y="46" width="13" height="13" rx="3" fill="#6D94DC"/>
+                    <rect x="36" y="28" width="12" height="3.5" rx="1.75" fill="#6D94DC"/>
+                    <rect x="36" y="35" width="8" height="3.5" rx="1.75" fill="#8FAEEA"/>
+                    <circle cx="50.5" cy="50.5" r="14.5" fill="#FFB62B"/>
+                    <circle cx="50.5" cy="50.5" r="9.5" fill="#FFF7DB"/>
+                    <rect x="59.6" y="58.2" width="20" height="7.2" rx="3.6" transform="rotate(45 59.6 58.2)" fill="#F3A620"/>
+                  </svg>
+                </div>
+                <h2 class="lt-card-title">Finding store template</h2>
+                <div class="lt-card-progress">
+                  <div class="lt-progress-meta">
+                    <span class="lt-progress-label">IN PROGRESS</span>
+                    <span class="lt-progress-value">0%</span>
+                  </div>
+                  <div class="lt-progress-track">
+                    <div class="lt-progress-bar"></div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="lt-card lt-card--off-right" data-phase-index="2">
+                <div class="lt-card-media">
+                  <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="13" y="10" width="38" height="52" rx="7" fill="#D8E4FF"/>
+                    <rect x="13" y="10" width="38" height="10" rx="7" fill="#4666AF"/>
+                    <rect x="18" y="15" width="4" height="2.5" rx="1.25" fill="#AFC3F4"/>
+                    <rect x="25" y="15" width="4" height="2.5" rx="1.25" fill="#AFC3F4"/>
+                    <rect x="32" y="15" width="4" height="2.5" rx="1.25" fill="#AFC3F4"/>
+                    <rect x="18" y="26" width="13" height="13" rx="3" fill="#6D94DC"/>
+                    <rect x="18" y="46" width="13" height="13" rx="3" fill="#6D94DC"/>
+                    <rect x="36" y="28" width="12" height="3.5" rx="1.75" fill="#6D94DC"/>
+                    <rect x="36" y="35" width="8" height="3.5" rx="1.75" fill="#8FAEEA"/>
+                    <path d="M61.958 48.987C61.615 48.112 61.083 47.315 60.395 46.657L56.103 42.544C54.416 40.929 51.755 40.986 50.138 42.672L44.612 48.434L43.294 53.811L48.727 52.412L54.252 46.651C54.654 46.231 55.319 46.217 55.739 46.619L57.679 48.477C58.1 48.88 58.113 49.545 57.711 49.965L52.185 55.726L50.802 61.102L56.229 59.703L61.755 53.942C62.823 52.828 63.105 51.108 62.478 49.728L61.958 48.987Z" fill="#D6262B"/>
+                    <path d="M41.706 54.311L46.934 53.012L45.62 58.336L41.706 54.311Z" fill="#FFB81C"/>
+                    <path d="M54.55 39.984L60.915 46.123L63.13 44.691C64.689 43.683 65.182 41.63 64.243 40.026L62.928 37.78C61.989 36.176 59.925 35.562 58.252 36.361L54.55 39.984Z" fill="#6DB4E8"/>
+                  </svg>
+                </div>
+                <h2 class="lt-card-title">Boosting CR &amp; AOV</h2>
+                <div class="lt-card-progress">
+                  <div class="lt-progress-meta">
+                    <span class="lt-progress-label">IN PROGRESS</span>
+                    <span class="lt-progress-value">0%</span>
+                  </div>
+                  <div class="lt-progress-track">
+                    <div class="lt-progress-bar"></div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="lt-card lt-card--right" data-phase-index="1">
+                <div class="lt-card-media">
+                  <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="13" y="10" width="38" height="52" rx="7" fill="#D8E4FF"/>
+                    <rect x="13" y="10" width="38" height="10" rx="7" fill="#4666AF"/>
+                    <rect x="18" y="15" width="4" height="2.5" rx="1.25" fill="#AFC3F4"/>
+                    <rect x="25" y="15" width="4" height="2.5" rx="1.25" fill="#AFC3F4"/>
+                    <rect x="32" y="15" width="4" height="2.5" rx="1.25" fill="#AFC3F4"/>
+                    <rect x="18" y="26" width="13" height="13" rx="3" fill="#6D94DC"/>
+                    <rect x="18" y="46" width="13" height="13" rx="3" fill="#6D94DC"/>
+                    <rect x="36" y="28" width="12" height="3.5" rx="1.75" fill="#6D94DC"/>
+                    <rect x="36" y="35" width="8" height="3.5" rx="1.75" fill="#8FAEEA"/>
+                    <path d="M57.241 40.336C58.227 39.351 59.825 39.351 60.811 40.336L62.129 41.654C63.114 42.64 63.114 44.238 62.129 45.223L58.389 48.964L56.03 46.605L57.241 40.336Z" fill="#FFB62B"/>
+                    <path d="M45.758 51.847L56.029 41.576L60.888 46.435L50.618 56.706L44.846 58.103L45.758 51.847Z" fill="#FFB62B"/>
+                    <path d="M44.846 58.103L47.24 55.709L50.618 56.706L44.846 58.103Z" fill="#C97D00"/>
+                    <path d="M61.29 29.371L62.301 32.944L65.874 33.954L62.301 34.965L61.29 38.538L60.279 34.965L56.706 33.954L60.279 32.944L61.29 29.371Z" fill="#FFB62B"/>
+                    <path d="M54.866 32.736L55.523 35.062L57.849 35.72L55.523 36.378L54.866 38.704L54.208 36.378L51.882 35.72L54.208 35.062L54.866 32.736Z" fill="#FFB62B"/>
+                  </svg>
+                </div>
+                <h2 class="lt-card-title">Customizing your store</h2>
+                <div class="lt-card-progress">
+                  <div class="lt-progress-meta">
+                    <span class="lt-progress-label">IN PROGRESS</span>
+                    <span class="lt-progress-value">0%</span>
+                  </div>
+                  <div class="lt-progress-track">
+                    <div class="lt-progress-bar"></div>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <header class="lt-header">
+            <div class="lt-title-row">
+              <h1 class="lt-title" id="loading-template-title">WE&rsquo;RE CREATING <span class="lt-title-accent">YOUR STORE</span></h1>
+              <svg class="lt-title-sparkles" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M9.75 3.5L11.3 8.2L16 9.75L11.3 11.3L9.75 16L8.2 11.3L3.5 9.75L8.2 8.2L9.75 3.5Z"/>
+                <path d="M18.5 2L19.4 4.6L22 5.5L19.4 6.4L18.5 9L17.6 6.4L15 5.5L17.6 4.6L18.5 2Z"/>
+                <path d="M18.5 15L19.6 18.4L23 19.5L19.6 20.6L18.5 24L17.4 20.6L14 19.5L17.4 18.4L18.5 15Z"/>
+              </svg>
+            </div>
+            <p class="lt-subtitle">Chờ một chút nhé quá trình sẽ mất khoảng 10-15s</p>
+          </header>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <script>
     const BUSINESS_MODEL_STORAGE_KEY = 'convercore.selectedBusinessModel';
     const prototypeCredentials = {
@@ -1411,6 +1902,7 @@
         'business-model': document.getElementById('business-model-screen'),
         'store-name': document.getElementById('store-name-screen'),
         'business-goal': document.getElementById('business-goal-screen'),
+        'loading-template': document.getElementById('loading-template-screen'),
       };
 
       Object.entries(screens).forEach(([name, el]) => {
@@ -1418,6 +1910,10 @@
       });
 
       document.body.classList.toggle('is-business-model', screenName === 'business-model');
+
+      if (screenName !== 'loading-template') {
+        stopLoadingTemplateSequence();
+      }
 
       if (screenName === 'business-model') {
         syncBusinessModelSelection();
@@ -1432,6 +1928,10 @@
       if (screenName === 'business-goal') {
         const textarea = document.getElementById('bg-input');
         setTimeout(() => textarea.focus(), 180);
+      }
+
+      if (screenName === 'loading-template') {
+        startLoadingTemplateSequence();
       }
     }
 
@@ -1583,6 +2083,30 @@
       'Increase average order value',
     ];
 
+    const LOADING_PHASES = [
+      { key: 'find', title: 'Finding store template', duration: 4000 },
+      { key: 'customize', title: 'Customizing your store', duration: 8000 },
+      { key: 'boost', title: 'Boosting CR & AOV', duration: 8000 },
+    ];
+
+    const LOADING_SLIDE_DURATION = 560;
+
+    const LOADING_LAYOUTS = [
+      ['center', 'right', 'off-right'],
+      ['left', 'center', 'right'],
+      ['off-left', 'left', 'center'],
+    ];
+
+    const loadingTemplateState = {
+      activeIndex: 0,
+      layoutIndex: 0,
+      progresses: [0, 0, 0],
+    };
+
+    let loadingTemplateFrame = null;
+    let loadingTemplateTimeout = null;
+    let loadingTemplateRestartTimeout = null;
+
     function setupBusinessGoalScreen() {
       const textarea = document.getElementById('bg-input');
       const continueBtn = document.getElementById('bg-continue');
@@ -1637,6 +2161,7 @@
       continueBtn.addEventListener('click', () => {
         if (!continueBtn.disabled) {
           sessionStorage.setItem('convercore.businessGoal', textarea.value.trim());
+          setActiveScreen('loading-template');
         }
       });
 
@@ -1651,10 +2176,108 @@
       });
     }
 
+    function renderLoadingTemplateState() {
+      const cards = Array.from(document.querySelectorAll('.lt-card'));
+      const layout = LOADING_LAYOUTS[loadingTemplateState.layoutIndex] || LOADING_LAYOUTS[0];
+
+      cards.forEach((card) => {
+        const phaseIndex = Number(card.dataset.phaseIndex);
+        const progress = Math.max(0, Math.min(100, Math.round(loadingTemplateState.progresses[phaseIndex] || 0)));
+        const valueEl = card.querySelector('.lt-progress-value');
+        const barEl = card.querySelector('.lt-progress-bar');
+        const slot = layout[phaseIndex] || 'hidden';
+
+        card.classList.remove('lt-card--left', 'lt-card--center', 'lt-card--right', 'lt-card--off-left', 'lt-card--off-right', 'lt-card--hidden');
+        card.classList.toggle('is-started', progress > 0);
+        card.classList.add(`lt-card--${slot}`);
+
+        valueEl.textContent = `${progress}%`;
+        barEl.style.width = `${progress}%`;
+      });
+    }
+
+    function stopLoadingTemplateSequence() {
+      if (loadingTemplateFrame) {
+        cancelAnimationFrame(loadingTemplateFrame);
+        loadingTemplateFrame = null;
+      }
+
+      if (loadingTemplateTimeout) {
+        clearTimeout(loadingTemplateTimeout);
+        loadingTemplateTimeout = null;
+      }
+
+      if (loadingTemplateRestartTimeout) {
+        clearTimeout(loadingTemplateRestartTimeout);
+        loadingTemplateRestartTimeout = null;
+      }
+    }
+
+    function transitionLoadingLayout(nextIndex, onDone) {
+      loadingTemplateState.layoutIndex = nextIndex;
+      renderLoadingTemplateState();
+
+      loadingTemplateRestartTimeout = setTimeout(() => {
+        loadingTemplateRestartTimeout = null;
+        onDone();
+      }, LOADING_SLIDE_DURATION);
+    }
+
+    function runLoadingPhase(index) {
+      const phase = LOADING_PHASES[index];
+      if (!phase) {
+        return;
+      }
+
+      loadingTemplateState.activeIndex = index;
+      renderLoadingTemplateState();
+
+      const startedAt = performance.now();
+
+      function tick(now) {
+        const elapsed = now - startedAt;
+        const ratio = Math.min(1, elapsed / phase.duration);
+
+        loadingTemplateState.progresses[index] = ratio * 100;
+        renderLoadingTemplateState();
+
+        if (ratio < 1) {
+          loadingTemplateFrame = requestAnimationFrame(tick);
+          return;
+        }
+
+        loadingTemplateState.progresses[index] = 100;
+        renderLoadingTemplateState();
+        loadingTemplateFrame = null;
+
+        if (index < LOADING_PHASES.length - 1) {
+          loadingTemplateTimeout = setTimeout(() => {
+            loadingTemplateTimeout = null;
+            transitionLoadingLayout(index + 1, () => {
+              runLoadingPhase(index + 1);
+            });
+          }, 320);
+          return;
+        }
+      }
+
+      loadingTemplateFrame = requestAnimationFrame(tick);
+    }
+
+    function startLoadingTemplateSequence() {
+      stopLoadingTemplateSequence();
+      loadingTemplateState.activeIndex = 0;
+      loadingTemplateState.layoutIndex = 0;
+      loadingTemplateState.progresses = [0, 0, 0];
+      renderLoadingTemplateState();
+      runLoadingPhase(0);
+    }
+
     setupPrototypeFill();
     setupBusinessModelSelection();
     setupStoreNameScreen();
     setupBusinessGoalScreen();
+    renderLoadingTemplateState();
   </script>
 </body>
 </html>
