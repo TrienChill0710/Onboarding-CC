@@ -6,7 +6,7 @@
   <title>Sign up — ConverCore</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Flex:opsz,wght@8..144,400;8..144,500;8..144,600;8..144,700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after {
       box-sizing: border-box;
@@ -1373,6 +1373,1176 @@
       }
     }
 
+
+  /* ═══════════════════════════════════════════
+     STORE PREVIEW SCREEN
+  ═══════════════════════════════════════════ */
+
+  .store-preview-screen {
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #F1F5F9;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── CC Header bar ── */
+  .sp-cc-header {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    background: #fff;
+    border-bottom: 1px solid #e5eaf0;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    padding: 8px 21px;
+    flex-shrink: 0;
+  }
+  .sp-cc-header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .sp-cc-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    background: #fff;
+    color: #334155;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .sp-cc-back svg { flex-shrink: 0; }
+  .sp-cc-create {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 38px;
+    padding: 0 12px;
+    border: none;
+    border-radius: 6px;
+    background: #0088ff;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  /* ── Report bar ── */
+  .sp-report-bar {
+    background: #fff;
+    border-bottom: 1px solid #fef3c6;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 21px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 56px;
+    z-index: 199;
+    transition: height 220ms ease;
+    overflow: hidden;
+    flex-wrap: wrap;
+    align-content: flex-start;
+  }
+  .sp-report-bar.is-open {
+    height: 163px;
+  }
+  /* Left group */
+  .sp-report-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    height: 40px;
+  }
+  /* Orange CR badge (circle) */
+  .sp-cr-circle {
+    width: 28px; height: 28px;
+    background: #fe9a00;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .sp-cr-circle svg { display: block; }
+  /* CR Score text */
+  .sp-cr-score-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: #171717;
+    white-space: nowrap;
+  }
+  .sp-report-sep { color: #d4d4d4; font-size: 16px; line-height: 24px; }
+  .sp-report-text { color: #3f3f3f; font-size: 14px; white-space: nowrap; }
+  /* Right button */
+  .sp-report-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: #3f3f3f;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    height: 40px;
+  }
+  .sp-report-chevron {
+    transition: transform 220ms ease;
+    flex-shrink: 0;
+  }
+  .sp-report-bar.is-open .sp-report-chevron {
+    transform: rotate(180deg);
+  }
+  /* Open state: page breakdown row */
+  .sp-report-cards {
+    width: 100%;
+    display: flex;
+    gap: 12px;
+    padding: 0;
+    opacity: 0;
+    transition: opacity 180ms ease 40ms;
+    pointer-events: none;
+  }
+  .sp-report-bar.is-open .sp-report-cards {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .sp-report-card {
+    flex: 1;
+    background: #fff;
+    border: 1px solid #fef3c6;
+    border-radius: 10px;
+    padding: 13px 13px 1px 13px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .sp-report-card-label {
+    font-size: 12px;
+    font-weight: 400;
+    color: #737373;
+  }
+  .sp-report-card-score-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sp-report-progress {
+    flex: 1;
+    height: 6px;
+    background: #f5f5f5;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .sp-report-progress-fill {
+    height: 100%;
+    background: #fe9a00;
+    border-radius: 999px;
+  }
+  .sp-report-card-score {
+    font-size: 14px;
+    font-weight: 600;
+    color: #0a0a0a;
+    white-space: nowrap;
+  }
+  .sp-report-card-opts {
+    font-size: 12px;
+    font-weight: 400;
+    color: #737373;
+  }
+
+  /* ── Browser chrome bar ── */
+  .sp-browser-bar {
+    background: #f5f5f5;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    padding: 0 11px;
+    gap: 16px;
+    border-bottom: 1px solid #e5e5e5;
+    flex-shrink: 0;
+  }
+  .sp-mac-dots { display: flex; align-items: center; gap: 6px; }
+  .sp-mac-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+  }
+  .sp-mac-dot--red   { background: #ffa1ad; }
+  .sp-mac-dot--yellow { background: #ffd230; }
+  .sp-mac-dot--green  { background: #5ee9b5; }
+  .sp-browser-url {
+    color: #737373;
+    font-size: 10px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* ── Store wrapper (Container: bg #F1F5F9, padding 21px) ── */
+  .sp-store-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    padding: 21px;
+  }
+
+  /* ── Store main frame (Main: bg #fff, border 1px) ── */
+  .sp-store-main {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  /* ── Store content (1406px wide) ── */
+  .sp-store-body {
+    width: 1406px;
+    max-width: 100%;
+    margin: 0 auto;
+    background: #fff;
+  }
+
+  /* ── Store nav ── */
+  .sp-store-nav {
+    background: #fff;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+    border-bottom: 1px solid #f0f0f0;
+    gap: 32px;
+  }
+  .sp-nav-logo {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #0d0a1e;
+    display: flex; align-items: center; gap: 6px;
+    flex-shrink: 0;
+    letter-spacing: 1px;
+  }
+  .sp-nav-logo-icon {
+    width: 28px; height: 28px;
+    background: #3b71dc;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .sp-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+    list-style: none;
+  }
+  .sp-nav-links li a {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: #0d0a1e;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .sp-nav-icons {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+  .sp-nav-icon {
+    width: 24px; height: 24px;
+    color: #0d0a1e;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .sp-cart-badge {
+    position: relative;
+    display: flex; align-items: center;
+  }
+  .sp-cart-count {
+    position: absolute;
+    top: -6px; right: -8px;
+    background: #3b71dc;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    border-radius: 10px;
+    padding: 0 4px;
+    min-width: 14px;
+    height: 14px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .sp-nav-lang {
+    font-size: 11px;
+    color: #737373;
+    font-family: 'Inter', sans-serif;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* ── Slideshow ── */
+  .sp-slideshow {
+    width: 100%;
+    height: 400px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1a3a6b 0%, #2d5aa0 40%, #1e3c72 100%);
+    display: flex; align-items: center;
+  }
+  .sp-slideshow-bg {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.1) 60%, transparent 100%),
+      linear-gradient(135deg, #1a3565 0%, #2a5298 50%, #0d2348 100%);
+  }
+  .sp-slideshow-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 96px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 740px;
+  }
+  .sp-slideshow-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.85);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .sp-slideshow-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 40px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+  }
+  .sp-slideshow-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 48px;
+    padding: 0 24px;
+    background: #3b71dc;
+    border: none;
+    color: #fff;
+    font-family: 'Roboto Flex', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+    width: fit-content;
+  }
+  .sp-slideshow-arr {
+    position: absolute;
+    width: 48px; height: 48px;
+    background: rgba(255,255,255,0.32);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    z-index: 3;
+    top: 50%; transform: translateY(-50%);
+  }
+  .sp-slideshow-arr--prev { left: 24px; }
+  .sp-slideshow-arr--next { right: 24px; }
+  .sp-slideshow-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex; gap: 8px;
+    z-index: 3;
+  }
+  .sp-slide-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    background: rgba(255,255,255,0.24);
+  }
+  .sp-slide-dot--active { background: #fff; }
+
+  /* ── Benefits ── */
+  .sp-benefits {
+    background: #c6d7eb;
+    padding: 32px 0 24px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .sp-benefits-inner {
+    width: 1120px;
+    max-width: 100%;
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+  }
+  .sp-benefit-item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: #fff;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .sp-benefit-icon {
+    width: 40px; height: 40px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .sp-benefit-watermark {
+    position: absolute;
+    right: 0; bottom: 0;
+    width: 80px; height: 80px;
+    opacity: 0.08;
+    pointer-events: none;
+  }
+  .sp-benefit-text { display: flex; flex-direction: column; gap: 4px; }
+  .sp-benefit-title {
+    font-family: 'Roboto Flex', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #0d0a1e;
+    line-height: 1.4;
+  }
+  .sp-benefit-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #0d0a1e;
+    line-height: 1.5;
+  }
+
+  /* ── Section header ── */
+  .sp-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .sp-section-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #0d0a1e;
+  }
+  .sp-view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: 'Roboto Flex', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #3b71dc;
+    text-decoration: none;
+  }
+
+  /* ── Product card ── */
+  .sp-product-card {
+    width: 278px;
+    background: #fff;
+    padding: 16px;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .sp-product-img {
+    width: 246px;
+    height: 246px;
+    background: #f5f5f5;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+  .sp-product-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .sp-product-name {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #0d0a1e;
+    line-height: 1.4;
+    height: 40px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+  .sp-product-prices {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .sp-price-sale {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #0d0a1e;
+  }
+  .sp-price-orig {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #737373;
+    text-decoration: line-through;
+  }
+  .sp-product-stars {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .sp-stars { display: flex; gap: 2px; }
+  .sp-star {
+    width: 12px; height: 12px;
+    fill: #eebd29;
+  }
+  .sp-star-empty { fill: none; stroke: #eebd29; stroke-width: 1.5; }
+  .sp-review-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: #0d0a1e;
+  }
+  .sp-sales-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: #dc3b3b;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 2px 8px;
+  }
+
+  /* ── Products row ── */
+  .sp-products-row {
+    display: flex;
+    gap: 16px;
+  }
+
+  /* ── Best Selling ── */
+  .sp-best-selling {
+    padding: 40px 0;
+    background: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+  .sp-section-inner {
+    width: 1120px;
+    max-width: 100%;
+  }
+  .sp-carousel-wrap {
+    position: relative;
+  }
+  .sp-carousel-btns {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: -28px;
+    right: -28px;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .sp-carousel-btn {
+    width: 48px; height: 48px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: all;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  }
+
+  /* ── Collection Electronics ── */
+  .sp-collection {
+    background: #f7fbfc;
+    padding: 28px 0;
+    display: flex;
+    justify-content: center;
+  }
+  .sp-collection-inner {
+    width: 1120px;
+    max-width: 100%;
+  }
+  .sp-collection-layout {
+    display: flex;
+    gap: 8px;
+  }
+  .sp-collection-cover {
+    width: 559px;
+    height: 755px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: linear-gradient(160deg, #1a3a6b 0%, #2d5498 100%);
+  }
+  .sp-collection-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.7;
+  }
+  .sp-collection-cover-content {
+    position: absolute;
+    bottom: 40px;
+    left: 32px;
+    right: 32px;
+  }
+  .sp-collection-cover-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .sp-collection-cover-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  .sp-shop-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 48px;
+    padding: 0 24px;
+    background: #3b71dc;
+    color: #fff;
+    font-family: 'Roboto Flex', sans-serif;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+  }
+  .sp-collection-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .sp-collection-grid .sp-product-card {
+    width: auto;
+  }
+  .sp-collection-grid .sp-product-img {
+    width: 100%;
+  }
+
+  /* ── Banner (Beauty / Garden) ── */
+  .sp-banner {
+    height: 513px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    background: #f7f9fc;
+  }
+  .sp-banner-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+  }
+  .sp-banner-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.1) 50%, transparent 100%);
+  }
+  .sp-banner-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 0 0 160px;
+    max-width: 520px;
+  }
+  .sp-banner-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+  .sp-banner-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+  .sp-banner-products {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 0;
+  }
+
+  /* ── Product list section ── */
+  .sp-product-list {
+    padding: 36px 0;
+    display: flex;
+    justify-content: center;
+    background: #f7f7f7;
+  }
+  .sp-product-list .sp-products-row {
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+
+  /* ── Apparel collection ── */
+  .sp-collection-apparel {
+    background: #f7f9fc;
+    padding: 28px 0;
+    display: flex;
+    justify-content: center;
+  }
+  .sp-collection-apparel-layout {
+    display: flex;
+    gap: 8px;
+    width: 1120px;
+    max-width: 100%;
+  }
+  .sp-apparel-cover {
+    width: 559px;
+    height: 755px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: linear-gradient(160deg, #2d2434 0%, #4a3660 100%);
+  }
+  .sp-apparel-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.65;
+  }
+
+  /* ── Feature product (Deal of week) ── */
+  .sp-feature-product {
+    background: #f7f9fc;
+    padding: 0 0 32px 0;
+    display: flex;
+    justify-content: center;
+  }
+  .sp-deal-inner {
+    width: 1120px;
+    max-width: 100%;
+  }
+  .sp-deal-header {
+    background: linear-gradient(90deg, #1a3a6b 0%, #2a5298 100%);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0;
+  }
+  .sp-deal-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .sp-deal-timer {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    background: rgba(255,255,255,0.15);
+    padding: 4px 12px;
+    border-radius: 4px;
+  }
+  .sp-deal-body {
+    background: #fff;
+    display: flex;
+    gap: 0;
+    min-height: 420px;
+  }
+  .sp-deal-img {
+    width: 380px;
+    background: #f0f4f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .sp-deal-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .sp-deal-info {
+    flex: 1;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .sp-deal-reviews {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #0d0a1e;
+  }
+  .sp-deal-product-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #0d0a1e;
+    line-height: 1.3;
+  }
+  .sp-deal-prices {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sp-deal-price-sale {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #0d0a1e;
+  }
+  .sp-deal-price-orig {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: #737373;
+    text-decoration: line-through;
+  }
+  .sp-deal-badge {
+    background: #dc3b3b;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 3px;
+  }
+  .sp-deal-bullets {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .sp-deal-bullet {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #0d0a1e;
+  }
+  .sp-deal-bullet-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #0d0a1e;
+    padding-left: 20px;
+  }
+  .sp-deal-color {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #0d0a1e;
+  }
+  .sp-deal-qty {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #0d0a1e;
+  }
+  .sp-qty-ctrl {
+    display: flex;
+    align-items: center;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .sp-qty-btn {
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    background: #f5f5f5;
+    cursor: pointer;
+    font-size: 16px;
+    color: #0d0a1e;
+  }
+  .sp-qty-val {
+    width: 40px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+  }
+  .sp-deal-stock {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #737373;
+  }
+  .sp-deal-ctas {
+    display: flex;
+    gap: 12px;
+  }
+  .sp-cta-add {
+    flex: 1;
+    height: 52px;
+    background: #1a3a6b;
+    color: #fff;
+    border: none;
+    font-family: 'Roboto Flex', sans-serif;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  .sp-cta-buy {
+    flex: 1;
+    height: 52px;
+    background: #3b71dc;
+    color: #fff;
+    border: none;
+    font-family: 'Roboto Flex', sans-serif;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  /* ── Customer Love Us ── */
+  .sp-customer-love {
+    background: #f7f7f7;
+    padding: 40px 0;
+    display: flex;
+    justify-content: center;
+  }
+  .sp-review-cards {
+    display: flex;
+    gap: 16px;
+  }
+  .sp-review-card {
+    background: #fff;
+    padding: 20px;
+    width: 346px;
+    flex-shrink: 0;
+  }
+  .sp-review-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .sp-reviewer-info { display: flex; flex-direction: column; gap: 2px; }
+  .sp-reviewer-name {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #0d0a1e;
+  }
+  .sp-review-date {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #737373;
+  }
+  .sp-review-product-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #0d0a1e;
+    margin-bottom: 8px;
+  }
+  .sp-review-body {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #0d0a1e;
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .sp-review-product-ref {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #737373;
+  }
+
+  /* ── Subscribe ── */
+  .sp-subscribe {
+    background: #fff;
+    padding: 60px 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .sp-subscribe-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 80px;
+    width: 1120px;
+    max-width: 100%;
+  }
+  .sp-subscribe-img {
+    width: 460px;
+    height: 316px;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #e8f0f8 0%, #c6d7eb 100%);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .sp-subscribe-img img { width: 100%; height: 100%; object-fit: cover; }
+  .sp-subscribe-form { flex: 1; padding-top: 32px; }
+  .sp-subscribe-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #0d0a1e;
+    margin-bottom: 8px;
+  }
+  .sp-subscribe-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: #0d0a1e;
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+  .sp-subscribe-input-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 16px;
+  }
+  .sp-subscribe-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #0d0a1e;
+  }
+  .sp-subscribe-input {
+    width: 100%;
+    height: 48px;
+    border: 1px solid #e5e5e5;
+    padding: 0 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    outline: none;
+    color: #0d0a1e;
+  }
+  .sp-subscribe-hint {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #737373;
+  }
+  .sp-subscribe-btn {
+    height: 48px;
+    padding: 0 32px;
+    background: #0d0a1e;
+    color: #fff;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  /* ── Footer ── */
+  .sp-footer {
+    background: #fff;
+    border-top: 1px solid #f0f0f0;
+    padding: 40px 32px 24px;
+    display: flex;
+    justify-content: center;
+  }
+  .sp-footer-inner {
+    width: 1120px;
+    max-width: 100%;
+  }
+  .sp-footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 32px;
+  }
+  .sp-footer-col-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #0d0a1e;
+    margin-bottom: 16px;
+  }
+  .sp-footer-col-body {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #0d0a1e;
+    line-height: 1.7;
+  }
+  .sp-footer-col-body a {
+    color: #0d0a1e;
+    text-decoration: none;
+    display: block;
+  }
+  .sp-footer-socials {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .sp-social-link {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #071607;
+    text-decoration: none;
+  }
+  .sp-footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 20px;
+    border-top: 1px solid #f0f0f0;
+  }
+  .sp-footer-copyright {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: #0d0a1e;
+  }
+  .sp-footer-bottom-links {
+    display: flex;
+    gap: 16px;
+  }
+  .sp-footer-bottom-link {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #0d0a1e;
+    text-decoration: none;
+  }
+
+  /* ── CR tooltip tags on sections ── */
+  .sp-cr-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 3.5px;
+    background: #ffedd5;
+    border-radius: 6px;
+    padding: 3.5px 7px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: #c2410c;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    box-shadow: 0 0 8px rgba(194,65,12,0.15);
+  }
+
   </style>
 </head>
 <body>
@@ -1815,6 +2985,636 @@
     </div>
   </section>
 
+  <!-- ═══════════════ STORE PREVIEW SCREEN ═══════════════ -->
+  <section class="screen store-preview-screen" id="store-preview-screen">
+
+    <!-- CC Header -->
+    <header class="sp-cc-header">
+      <div class="sp-cc-header-inner">
+        <button class="sp-cc-back">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="#334155" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Back
+        </button>
+        <button class="sp-cc-create">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l4 4 6-7" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Create store now
+        </button>
+      </div>
+    </header>
+
+    <!-- Report bar -->
+    <div class="sp-report-bar" id="sp-report-bar">
+      <!-- Left: CR score group -->
+      <div class="sp-report-left">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div class="sp-cr-circle">
+            <!-- Lightning bolt icon -->
+            <svg width="11" height="14" viewBox="0 0 11 14" fill="none">
+              <path d="M6.5 1L1 8h4.5L4 13l6.5-7H6L6.5 1z" fill="#fff" stroke="#fff" stroke-width="0.5" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="sp-cr-score-text">CR Score: 84/100</span>
+        </div>
+        <span class="sp-report-sep">·</span>
+        <span class="sp-report-text">Top 20% Dropship stores</span>
+        <span class="sp-report-sep">·</span>
+        <span class="sp-report-text">21 optimizations applied</span>
+      </div>
+      <!-- Right: See full report button -->
+      <button class="sp-report-btn" id="sp-report-toggle">
+        See full report
+        <svg class="sp-report-chevron" width="12" height="7" viewBox="0 0 12 7" fill="none">
+          <path d="M1 1l5 5 5-5" stroke="#3f3f3f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <!-- Open state: 4 page breakdown cards -->
+      <div class="sp-report-cards">
+        <div class="sp-report-card">
+          <span class="sp-report-card-label">Homepage</span>
+          <div class="sp-report-card-score-row">
+            <div class="sp-report-progress"><div class="sp-report-progress-fill" style="width:85%;"></div></div>
+            <span class="sp-report-card-score">8/10</span>
+          </div>
+          <span class="sp-report-card-opts">8 optimizations</span>
+        </div>
+        <div class="sp-report-card">
+          <span class="sp-report-card-label">Product Detail</span>
+          <div class="sp-report-card-score-row">
+            <div class="sp-report-progress"><div class="sp-report-progress-fill" style="width:90%;"></div></div>
+            <span class="sp-report-card-score">9/10</span>
+          </div>
+          <span class="sp-report-card-opts">9 optimizations</span>
+        </div>
+        <div class="sp-report-card">
+          <span class="sp-report-card-label">Your cart</span>
+          <div class="sp-report-card-score-row">
+            <div class="sp-report-progress"><div class="sp-report-progress-fill" style="width:85%;"></div></div>
+            <span class="sp-report-card-score">8/10</span>
+          </div>
+          <span class="sp-report-card-opts">2 optimizations</span>
+        </div>
+        <div class="sp-report-card">
+          <span class="sp-report-card-label">Checkout</span>
+          <div class="sp-report-card-score-row">
+            <div class="sp-report-progress"><div class="sp-report-progress-fill" style="width:85%;"></div></div>
+            <span class="sp-report-card-score">8/10</span>
+          </div>
+          <span class="sp-report-card-opts">2 optimizations</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Store wrapper -->
+    <div class="sp-store-wrapper">
+      <!-- Main frame (white container) -->
+      <div class="sp-store-main">
+      <!-- Browser chrome bar -->
+      <div class="sp-browser-bar">
+        <div class="sp-mac-dots">
+          <span class="sp-mac-dot sp-mac-dot--red"></span>
+          <span class="sp-mac-dot sp-mac-dot--yellow"></span>
+          <span class="sp-mac-dot sp-mac-dot--green"></span>
+        </div>
+        <span class="sp-browser-url">Trendie-store.preview</span>
+      </div>
+
+      <!-- Store body -->
+      <div class="sp-store-body">
+
+        <!-- Store nav -->
+        <nav class="sp-store-nav">
+          <div class="sp-nav-logo">
+            <div class="sp-nav-logo-icon">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 3h10v4H3zM3 9h6v4H3zM11 9h2v4h-2z" fill="#fff"/></svg>
+            </div>
+            TRENDIE
+          </div>
+          <ul class="sp-nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Electronics</a></li>
+            <li><a href="#">Beauty &amp; Health</a></li>
+            <li><a href="#">Apparel</a></li>
+            <li><a href="#">Garden</a></li>
+            <li><a href="#">Best selling</a></li>
+            <li><a href="#">Contact us</a></li>
+            <li><a href="#">Order tracking</a></li>
+            <li><a href="#">FAQs</a></li>
+          </ul>
+          <div class="sp-nav-icons">
+            <span class="sp-nav-lang">English / USD</span>
+            <span class="sp-nav-icon">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="5.5" stroke="#0d0a1e" stroke-width="1.5"/><path d="M13 13l3.5 3.5" stroke="#0d0a1e" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </span>
+            <span class="sp-nav-icon">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="7" r="3" stroke="#0d0a1e" stroke-width="1.5"/><path d="M4 17c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="#0d0a1e" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </span>
+            <span class="sp-cart-badge">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 2h2.5l2 9h9l2-7H6" stroke="#0d0a1e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="17" r="1.5" fill="#0d0a1e"/><circle cx="15" cy="17" r="1.5" fill="#0d0a1e"/></svg>
+              <span class="sp-cart-count">0</span>
+            </span>
+          </div>
+        </nav>
+
+        <!-- Slideshow -->
+        <section class="sp-slideshow">
+          <div class="sp-slideshow-bg"></div>
+          <div class="sp-slideshow-content">
+            <span class="sp-slideshow-label">Best Selling</span>
+            <h2 class="sp-slideshow-title">Conquer the Skies with Mini Drone&nbsp;Power from Above</h2>
+            <button class="sp-slideshow-btn">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="13" height="10" rx="1" stroke="#f9f9ef" stroke-width="1.5"/><path d="M15 7l3 2-3 2V7z" fill="#f9f9ef"/></svg>
+              SHOP NOW
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M12 6l4 4-4 4" stroke="#f9f9ef" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+          <button class="sp-slideshow-arr sp-slideshow-arr--prev" aria-label="Previous">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="sp-slideshow-arr sp-slideshow-arr--next" aria-label="Next">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="sp-slideshow-dots">
+            <span class="sp-slide-dot sp-slide-dot--active"></span>
+            <span class="sp-slide-dot"></span>
+            <span class="sp-slide-dot"></span>
+          </div>
+        </section>
+
+        <!-- Benefits -->
+        <section class="sp-benefits">
+          <div class="sp-benefits-inner">
+            <div class="sp-benefit-item">
+              <div class="sp-benefit-icon">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.6654 15.0007C16.6654 15.9211 15.9192 16.6673 14.9987 16.6673C14.0782 16.6673 13.332 15.9211 13.332 15.0007C13.332 14.0802 14.0782 13.334 14.9987 13.334C15.9192 13.334 16.6654 14.0802 16.6654 15.0007Z" fill="#3C71DD"/><path d="M26.6654 25.0007C26.6654 25.9211 25.9192 26.6673 24.9987 26.6673C24.0782 26.6673 23.332 25.9211 23.332 25.0007C23.332 24.0802 24.0782 23.334 24.9987 23.334C25.9192 23.334 26.6654 24.0802 26.6654 25.0007Z" fill="#3C71DD"/><path d="M31.6667 3.33398H8.33333C6.49238 3.33398 5 4.82637 5 6.66732V31.9246C5 34.2332 7.29019 35.8428 9.4624 35.0609L12.0653 34.1238C12.8787 33.831 13.774 33.8656 14.5623 34.2203L18.6321 36.0518C19.502 36.4432 20.498 36.4432 21.3679 36.0518L25.4377 34.2203C26.226 33.8656 27.1213 33.831 27.9347 34.1238L30.5376 35.0609C32.7098 35.8428 35 34.2332 35 31.9246V6.66732C35 4.82637 33.5076 3.33398 31.6667 3.33398Z" stroke="#3C71DD" stroke-width="2" stroke-linecap="round"/><path d="M15 25L25 15" stroke="#3C71DD" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              <div class="sp-benefit-text">
+                <span class="sp-benefit-title">Buy more to get discount</span>
+                <span class="sp-benefit-desc">Free shipping on any order of $150 or more.</span>
+              </div>
+              <svg class="sp-benefit-watermark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.6654 15.0007C16.6654 15.9211 15.9192 16.6673 14.9987 16.6673C14.0782 16.6673 13.332 15.9211 13.332 15.0007C13.332 14.0802 14.0782 13.334 14.9987 13.334C15.9192 13.334 16.6654 14.0802 16.6654 15.0007Z" fill="#3C71DD"/><path d="M26.6654 25.0007C26.6654 25.9211 25.9192 26.6673 24.9987 26.6673C24.0782 26.6673 23.332 25.9211 23.332 25.0007C23.332 24.0802 24.0782 23.334 24.9987 23.334C25.9192 23.334 26.6654 24.0802 26.6654 25.0007Z" fill="#3C71DD"/><path d="M31.6667 3.33398H8.33333C6.49238 3.33398 5 4.82637 5 6.66732V31.9246C5 34.2332 7.29019 35.8428 9.4624 35.0609L12.0653 34.1238C12.8787 33.831 13.774 33.8656 14.5623 34.2203L18.6321 36.0518C19.502 36.4432 20.498 36.4432 21.3679 36.0518L25.4377 34.2203C26.226 33.8656 27.1213 33.831 27.9347 34.1238L30.5376 35.0609C32.7098 35.8428 35 34.2332 35 31.9246V6.66732C35 4.82637 33.5076 3.33398 31.6667 3.33398Z" stroke="#3C71DD" stroke-width="2" stroke-linecap="round"/><path d="M15 25L25 15" stroke="#3C71DD" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <div class="sp-benefit-item">
+              <div class="sp-benefit-icon">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.7407 9.25333L12.8591 4L8.41406 5.48167L13.6691 11.6117" stroke="#3C71DD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M37.6909 12.3909C37.5531 11.9746 37.3344 11.5895 37.0474 11.2579C36.7605 10.9262 36.4109 10.6544 36.0187 10.4581C35.6265 10.2618 35.1995 10.1448 34.762 10.1138C34.3245 10.0828 33.8852 10.1385 33.4693 10.2776L10.5243 17.9326L6.0826 15.3559L2.33594 16.5843L5.93427 23.4443H15.0643L35.5776 16.6109C35.9938 16.4731 36.3786 16.2544 36.7102 15.9676C37.0417 15.6808 37.3134 15.3313 37.5097 14.9394C37.706 14.5474 37.8231 14.1205 37.8542 13.6832C37.8853 13.2459 37.8298 12.8068 37.6909 12.3909Z" stroke="#3C71DD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.7714 22.2078L16.1914 35.1095H21.1914L27.8231 19.1895" stroke="#3C71DD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div class="sp-benefit-text">
+                <span class="sp-benefit-title">International delivery guaranteed</span>
+                <span class="sp-benefit-desc">You can rest assured to buy from anywhere in the world.</span>
+              </div>
+              <svg class="sp-benefit-watermark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.7407 9.25333L12.8591 4L8.41406 5.48167L13.6691 11.6117" stroke="#3C71DD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M37.6909 12.3909C37.5531 11.9746 37.3344 11.5895 37.0474 11.2579C36.7605 10.9262 36.4109 10.6544 36.0187 10.4581C35.6265 10.2618 35.1995 10.1448 34.762 10.1138C34.3245 10.0828 33.8852 10.1385 33.4693 10.2776L10.5243 17.9326L6.0826 15.3559L2.33594 16.5843L5.93427 23.4443H15.0643L35.5776 16.6109C35.9938 16.4731 36.3786 16.2544 36.7102 15.9676C37.0417 15.6808 37.3134 15.3313 37.5097 14.9394C37.706 14.5474 37.8231 14.1205 37.8542 13.6832C37.8853 13.2459 37.8298 12.8068 37.6909 12.3909Z" stroke="#3C71DD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.7714 22.2078L16.1914 35.1095H21.1914L27.8231 19.1895" stroke="#3C71DD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="sp-benefit-item">
+              <div class="sp-benefit-icon">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.8346 37.5013C20.8346 37.5013 4.16797 30.8346 4.16797 9.16797L20.8346 4.16797L37.5013 9.16797C37.5013 30.8346 20.8346 37.5013 20.8346 37.5013Z" stroke="#3C71DD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.168 20.5L19.3451 23.5156C20.2759 24.3991 21.7664 24.2844 22.5511 23.2689L28.168 16" stroke="#3C71DD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div class="sp-benefit-text">
+                <span class="sp-benefit-title">Secured packaging service</span>
+                <span class="sp-benefit-desc">If your product aren't perfect, return them for a full refund.</span>
+              </div>
+              <svg class="sp-benefit-watermark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.8346 37.5013C20.8346 37.5013 4.16797 30.8346 4.16797 9.16797L20.8346 4.16797L37.5013 9.16797C37.5013 30.8346 20.8346 37.5013 20.8346 37.5013Z" stroke="#3C71DD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.168 20.5L19.3451 23.5156C20.2759 24.3991 21.7664 24.2844 22.5511 23.2689L28.168 16" stroke="#3C71DD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+          <span class="sp-cr-tag" style="position:absolute;top:20.5px;right:120.5px;">
+            <svg width="10.5" height="10.5" viewBox="0 0 11 14" fill="none"><path d="M6.5 1L1 8h4.5L4 13l6.5-7H6L6.5 1z" fill="#c2410c" stroke="#c2410c" stroke-width="0.5" stroke-linejoin="round"/></svg>CR
+          </span>
+        </section>
+
+        <!-- Best Selling -->
+        <section class="sp-best-selling" style="position:relative;">
+          <div class="sp-section-inner">
+            <div class="sp-section-header">
+              <span class="sp-section-title">Best Selling</span>
+              <a class="sp-view-all" href="#">View all
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M12 6l4 4-4 4" stroke="#3b71dc" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+            <div class="sp-carousel-wrap">
+              <div class="sp-products-row">
+                <!-- Product 1 -->
+                <div class="sp-product-card">
+                  <span class="sp-sales-badge">SALES</span>
+                  <div class="sp-product-img"><img src="https://picsum.photos/seed/minidrone/246/246" alt="Mini Drone" loading="lazy"/></div>
+                  <div class="sp-product-name">Mini Drone 4K 1080P 720P Camera</div>
+                  <div class="sp-product-prices">
+                    <span class="sp-price-sale">$59.99</span>
+                    <span class="sp-price-orig">$99.99</span>
+                  </div>
+                  <div class="sp-product-stars">
+                    <div class="sp-stars">
+                      <svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg>
+                      <svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg>
+                      <svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg>
+                      <svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg>
+                      <svg class="sp-star sp-star-empty" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg>
+                    </div>
+                    <span class="sp-review-text">(4.5) 200 reviews</span>
+                  </div>
+                </div>
+                <!-- Product 2 -->
+                <div class="sp-product-card">
+                  <span class="sp-sales-badge">SALES</span>
+                  <div class="sp-product-img"><img src="https://picsum.photos/seed/hairdryer/246/246" alt="Hair Dryer" loading="lazy"/></div>
+                  <div class="sp-product-name">Electric Hair Dryer 5 In 1 Hair Comb Negative Ion Straightener</div>
+                  <div class="sp-product-prices">
+                    <span class="sp-price-sale">$59.99</span>
+                    <span class="sp-price-orig">$99.99</span>
+                  </div>
+                  <div class="sp-product-stars">
+                    <div class="sp-stars">
+                      <svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg>
+                      <svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg>
+                      <svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg>
+                      <svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg>
+                      <svg class="sp-star sp-star-empty" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg>
+                    </div>
+                    <span class="sp-review-text">(4.5) 200 reviews</span>
+                  </div>
+                </div>
+                <!-- Product 3 -->
+                <div class="sp-product-card">
+                  <span class="sp-sales-badge">SALES</span>
+                  <div class="sp-product-img"><img src="https://picsum.photos/seed/flowerpot/246/246" alt="Flowerpot" loading="lazy"/></div>
+                  <div class="sp-product-name">Creative Animal Resin Flowerpot Succulents Planter</div>
+                  <div class="sp-product-prices">
+                    <span class="sp-price-sale">$59.99</span>
+                    <span class="sp-price-orig">$99.99</span>
+                  </div>
+                  <div class="sp-product-stars">
+                    <div class="sp-stars">
+                      <svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg>
+                      <svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg>
+                      <svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg>
+                      <svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg>
+                      <svg class="sp-star sp-star-empty" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg>
+                    </div>
+                    <span class="sp-review-text">(4.5) 200 reviews</span>
+                  </div>
+                </div>
+                <!-- Product 4 -->
+                <div class="sp-product-card">
+                  <span class="sp-sales-badge">SALES</span>
+                  <div class="sp-product-img"><img src="https://picsum.photos/seed/guasha/246/246" alt="Gua Sha" loading="lazy"/></div>
+                  <div class="sp-product-name">Gua Sha Roller Massager Roller for Face</div>
+                  <div class="sp-product-prices">
+                    <span class="sp-price-sale">$59.99</span>
+                    <span class="sp-price-orig">$99.99</span>
+                  </div>
+                  <div class="sp-product-stars">
+                    <div class="sp-stars">
+                      <svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg>
+                      <svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg>
+                      <svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg>
+                      <svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg>
+                      <svg class="sp-star sp-star-empty" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg>
+                    </div>
+                    <span class="sp-review-text">(4.5) 200 reviews</span>
+                  </div>
+                </div>
+              </div>
+              <div class="sp-carousel-btns">
+                <button class="sp-carousel-btn"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M13 16l-6-6 6-6" stroke="#0d0a1e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                <button class="sp-carousel-btn"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 4l6 6-6 6" stroke="#0d0a1e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Collection: Electronics -->
+        <section class="sp-collection" style="position:relative;">
+          <span class="sp-cr-tag">
+            <svg width="8" height="10" viewBox="0 0 8 10" fill="none"><path d="M4 0L8 4H5v6H3V4H0L4 0z" fill="#c2410c"/></svg>CR
+          </span>
+          <div class="sp-collection-inner">
+            <div class="sp-collection-layout">
+              <div class="sp-collection-cover">
+                <img src="https://picsum.photos/seed/electronics-cover/559/755" alt="Electronics"/>
+                <div class="sp-collection-cover-content">
+                  <div class="sp-collection-cover-title">Electronics</div>
+                  <div class="sp-collection-cover-desc">Embrace the Power of Innovation, where technology meets convenience and style</div>
+                  <button class="sp-shop-btn">View all
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="#f9f9ef" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </button>
+                </div>
+              </div>
+              <div class="sp-collection-grid">
+                <div class="sp-product-card">
+                  <span class="sp-sales-badge">SALES</span>
+                  <div class="sp-product-img" style="width:100%;"><img src="https://picsum.photos/seed/drone2/246/246" alt="Drone" loading="lazy"/></div>
+                  <div class="sp-product-name">Mini Drone 4K UHD Camera Quadcopter</div>
+                  <div class="sp-product-prices"><span class="sp-price-sale">$59.99</span><span class="sp-price-orig">$99.99</span></div>
+                  <div class="sp-product-stars"><div class="sp-stars"><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star sp-star-empty" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg></div><span class="sp-review-text">(4.5) 200 reviews</span></div>
+                </div>
+                <div class="sp-product-card">
+                  <div class="sp-product-img" style="width:100%;"><img src="https://picsum.photos/seed/headphones/246/246" alt="Headphones" loading="lazy"/></div>
+                  <div class="sp-product-name">Original FPO UHS C20INO5 Bluetooth 5.0 Headphone</div>
+                  <div class="sp-product-prices"><span class="sp-price-sale">$59.99</span><span class="sp-price-orig">$99.99</span></div>
+                  <div class="sp-product-stars"><div class="sp-stars"><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star sp-star-empty" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg></div><span class="sp-review-text">(4.5) 200 reviews</span></div>
+                </div>
+                <div class="sp-product-card">
+                  <div class="sp-product-img" style="width:100%;"><img src="https://picsum.photos/seed/earbuds/246/246" alt="Earbuds" loading="lazy"/></div>
+                  <div class="sp-product-name">Cross Digital ABS MP3 JK Original FPO UHS GCINNO5</div>
+                  <div class="sp-product-prices"><span class="sp-price-sale">$64.99</span></div>
+                  <div class="sp-product-stars"><div class="sp-stars"><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star sp-star-empty" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg></div><span class="sp-review-text">(4.5) 200 reviews</span></div>
+                </div>
+                <div class="sp-product-card">
+                  <div class="sp-product-img" style="width:100%;"><img src="https://picsum.photos/seed/speaker/246/246" alt="Speaker" loading="lazy"/></div>
+                  <div class="sp-product-name">Touchscreen Mini Foldable Portable Speaker Bluetooth</div>
+                  <div class="sp-product-prices"><span class="sp-price-sale">$64.99</span><span class="sp-price-orig">$89.99</span></div>
+                  <div class="sp-product-stars"><div class="sp-stars"><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star sp-star-empty" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg></div><span class="sp-review-text">(4.5) 200 reviews</span></div>
+                </div>
+              </div>
+            </div>
+            <!-- Bottom products row -->
+            <div class="sp-products-row" style="margin-top:8px;">
+              <div class="sp-product-card"><span class="sp-sales-badge">SALES</span><div class="sp-product-img"><img src="https://picsum.photos/seed/innear/246/246" alt="" loading="lazy"/></div><div class="sp-product-name">Inner Soundcore Life Q20 Hybrid Active Noise Cancelling</div><div class="sp-product-prices"><span class="sp-price-sale">$59.99</span><span class="sp-price-orig">$99.99</span></div><div class="sp-product-stars"><div class="sp-stars"><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star sp-star-empty" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg></div><span class="sp-review-text">(4.5) 200 reviews</span></div></div>
+              <div class="sp-product-card"><div class="sp-product-img"><img src="https://picsum.photos/seed/charger/246/246" alt="" loading="lazy"/></div><div class="sp-product-name">Wireless Charger Bluetooth Speaker LED Lamp Wooden</div><div class="sp-product-prices"><span class="sp-price-sale">$64.99</span><span class="sp-price-orig">$89.99</span></div><div class="sp-product-stars"><div class="sp-stars"><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star sp-star-empty" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg></div><span class="sp-review-text">(4.5) 200 reviews</span></div></div>
+              <div class="sp-product-card"><span class="sp-sales-badge">SALES</span><div class="sp-product-img"><img src="https://picsum.photos/seed/laserpen/246/246" alt="" loading="lazy"/></div><div class="sp-product-name">Original TBS T77BE Bushnell Compact Tournament Binoculars</div><div class="sp-product-prices"><span class="sp-price-sale">$64.99</span><span class="sp-price-orig">$89.99</span></div><div class="sp-product-stars"><div class="sp-stars"><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star sp-star-empty" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg></div><span class="sp-review-text">(4.5) 200 reviews</span></div></div>
+              <div class="sp-product-card"><div class="sp-product-img"><img src="https://picsum.photos/seed/tabletarm/246/246" alt="" loading="lazy"/></div><div class="sp-product-name">Touchscreen Mini Foldable Portable Speaker</div><div class="sp-product-prices"><span class="sp-price-sale">$64.99</span><span class="sp-price-orig">$89.99</span></div><div class="sp-product-stars"><div class="sp-stars"><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star sp-star-empty" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg></div><span class="sp-review-text">(4.5) 200 reviews</span></div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Banner: Beauty -->
+        <section class="sp-banner" style="position:relative;">
+          <span class="sp-cr-tag">
+            <svg width="8" height="10" viewBox="0 0 8 10" fill="none"><path d="M4 0L8 4H5v6H3V4H0L4 0z" fill="#c2410c"/></svg>CR
+          </span>
+          <div class="sp-banner-bg" style="background: linear-gradient(135deg,#6b3a5a 0%,#a0527a 50%,#c97fa0 100%);"></div>
+          <div class="sp-banner-overlay"></div>
+          <div class="sp-banner-content">
+            <div class="sp-banner-title">Over 30% Off Beauty and Healthy products</div>
+            <div class="sp-banner-desc">Unleash Your Radiant Glow, where Beauty Meets Wellness.</div>
+            <button class="sp-shop-btn">View all <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="#f9f9ef" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+          <div style="position:absolute;right:0;top:0;bottom:0;width:560px;display:flex;gap:0;overflow:hidden;">
+            <div class="sp-product-card" style="width:50%;"><span class="sp-sales-badge">SALES</span><div class="sp-product-img" style="width:100%;height:200px;"><img src="https://picsum.photos/seed/beautyroller1/224/200" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;"/></div><div class="sp-product-name">Gua Sha Roller Massager for Face</div><div class="sp-product-prices"><span class="sp-price-sale">$59.99</span><span class="sp-price-orig">$99.99</span></div><div class="sp-product-stars"><div class="sp-stars"><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star sp-star-empty" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg></div><span class="sp-review-text">(4.5) 200 reviews</span></div></div>
+            <div class="sp-product-card" style="width:50%;"><span class="sp-sales-badge">SALES</span><div class="sp-product-img" style="width:100%;height:200px;"><img src="https://picsum.photos/seed/beautyroller2/224/200" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;"/></div><div class="sp-product-name">Gua Sha Roller Massager for Face Neck Eye</div><div class="sp-product-prices"><span class="sp-price-sale">$59.99</span><span class="sp-price-orig">$99.99</span></div><div class="sp-product-stars"><div class="sp-stars"><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star sp-star-empty" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg></div><span class="sp-review-text">(4.5) 200 reviews</span></div></div>
+          </div>
+        </section>
+
+        <!-- Product List: Beauty -->
+        <section class="sp-product-list" style="position:relative;">
+          <span class="sp-cr-tag">
+            <svg width="8" height="10" viewBox="0 0 8 10" fill="none"><path d="M4 0L8 4H5v6H3V4H0L4 0z" fill="#c2410c"/></svg>CR
+          </span>
+          <div class="sp-section-inner">
+            <div class="sp-section-header">
+              <span class="sp-section-title">More Product From Beauty &amp; Health</span>
+              <a class="sp-view-all" href="#">View all <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M12 6l4 4-4 4" stroke="#3b71dc" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+            <div class="sp-products-row">
+              <div class="sp-product-card"><span class="sp-sales-badge">SALES</span><div class="sp-product-img"><img src="https://picsum.photos/seed/guasha2/246/246" alt="" loading="lazy"/></div><div class="sp-product-name">Gua Sha Roller Massager Roller for Face Neck Eye Resin Facial</div><div class="sp-product-prices"><span class="sp-price-sale">$59.99</span><span class="sp-price-orig">$99.99</span></div><div class="sp-product-stars"><div class="sp-stars"><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star sp-star-empty" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg></div><span class="sp-review-text">(4.5) 200 reviews</span></div></div>
+              <div class="sp-product-card"><span class="sp-sales-badge">SALES</span><div class="sp-product-img"><img src="https://picsum.photos/seed/irrigator/246/246" alt="" loading="lazy"/></div><div class="sp-product-name">New Oral Irrigator Water Toothpick Portable Waterpik...</div><div class="sp-product-prices"><span class="sp-price-sale">$59.99</span><span class="sp-price-orig">$99.99</span></div><div class="sp-product-stars"><div class="sp-stars"><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star sp-star-empty" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg></div><span class="sp-review-text">(4.5) 200 reviews</span></div></div>
+              <div class="sp-product-card"><span class="sp-sales-badge">SALES</span><div class="sp-product-img"><img src="https://picsum.photos/seed/toothbrush/246/246" alt="" loading="lazy"/></div><div class="sp-product-name">Sonic Electric Toothbrush for Adults Children Ultrasonic...</div><div class="sp-product-prices"><span class="sp-price-sale">$59.99</span><span class="sp-price-orig">$99.99</span></div><div class="sp-product-stars"><div class="sp-stars"><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star sp-star-empty" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg></div><span class="sp-review-text">(4.5) 200 reviews</span></div></div>
+              <div class="sp-product-card"><span class="sp-sales-badge">SALES</span><div class="sp-product-img"><img src="https://picsum.photos/seed/mouthguard/246/246" alt="" loading="lazy"/></div><div class="sp-product-name">Sova 1.6mm Mouth Guard for Clenching and Grinding Teeth</div><div class="sp-product-prices"><span class="sp-price-sale">$59.99</span><span class="sp-price-orig">$99.99</span></div><div class="sp-product-stars"><div class="sp-stars"><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star sp-star-empty" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg></div><span class="sp-review-text">(4.5) 200 reviews</span></div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Collection: Apparel -->
+        <section class="sp-collection-apparel" style="position:relative;">
+          <span class="sp-cr-tag">
+            <svg width="8" height="10" viewBox="0 0 8 10" fill="none"><path d="M4 0L8 4H5v6H3V4H0L4 0z" fill="#c2410c"/></svg>CR
+          </span>
+          <div class="sp-collection-apparel-layout">
+            <div class="sp-apparel-cover">
+              <img src="https://picsum.photos/seed/apparel-cover/559/755" alt="Apparel"/>
+              <div class="sp-collection-cover-content">
+                <div class="sp-collection-cover-title">Apparel</div>
+                <div class="sp-collection-cover-desc">Elevate your wardrobe to new heights of elegance, where fashion meets sophistication</div>
+                <button class="sp-shop-btn">View all <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="#f9f9ef" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+              </div>
+            </div>
+            <div class="sp-collection-grid">
+              <div class="sp-product-card"><div class="sp-product-img" style="width:100%;"><img src="https://picsum.photos/seed/jeans/246/246" alt="" loading="lazy"/></div><div class="sp-product-name">Pocket Solid Color Overalls Jeans Women's</div><div class="sp-product-prices"><span class="sp-price-sale">$59.99</span></div><div class="sp-product-stars"><div class="sp-stars"><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star sp-star-empty" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg></div><span class="sp-review-text">(4.5) 200 reviews</span></div></div>
+              <div class="sp-product-card"><div class="sp-product-img" style="width:100%;"><img src="https://picsum.photos/seed/sunglasses/246/246" alt="" loading="lazy"/></div><div class="sp-product-name">RBRARE Portable Oversized Sunglasses UV Protection</div><div class="sp-product-prices"><span class="sp-price-sale">$64.99</span></div><div class="sp-product-stars"><div class="sp-stars"><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star sp-star-empty" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg></div><span class="sp-review-text">(4.5) 200 reviews</span></div></div>
+              <div class="sp-product-card"><span class="sp-sales-badge">SALES</span><div class="sp-product-img" style="width:100%;"><img src="https://picsum.photos/seed/belt/246/246" alt="" loading="lazy"/></div><div class="sp-product-name">PU Leather Simple Metal Buckle Belt</div><div class="sp-product-prices"><span class="sp-price-sale">$59.99</span><span class="sp-price-orig">$99.99</span></div><div class="sp-product-stars"><div class="sp-stars"><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star sp-star-empty" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg></div><span class="sp-review-text">(4.5) 200 reviews</span></div></div>
+              <div class="sp-product-card"><span class="sp-sales-badge">SALES</span><div class="sp-product-img" style="width:100%;"><img src="https://picsum.photos/seed/jacket/246/246" alt="" loading="lazy"/></div><div class="sp-product-name">Ink Dyed Jacket Retro Casual Cardigan Coat</div><div class="sp-product-prices"><span class="sp-price-sale">$59.99</span></div><div class="sp-product-stars"><div class="sp-stars"><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star sp-star-empty" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg></div><span class="sp-review-text">(4.5) 200 reviews</span></div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Banner: Garden -->
+        <section class="sp-banner" style="position:relative;background:#f7f9fc;">
+          <span class="sp-cr-tag">
+            <svg width="8" height="10" viewBox="0 0 8 10" fill="none"><path d="M4 0L8 4H5v6H3V4H0L4 0z" fill="#c2410c"/></svg>CR
+          </span>
+          <div class="sp-banner-bg" style="background: linear-gradient(135deg,#1a4a1a 0%,#2d7a2d 50%,#4a9a4a 100%);"></div>
+          <div class="sp-banner-overlay"></div>
+          <div class="sp-banner-content">
+            <div class="sp-banner-title">Over 40% Off Garden products</div>
+            <div class="sp-banner-desc">Help you love your gardening more with great tools.</div>
+            <button class="sp-shop-btn">View all <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="#f9f9ef" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+          <div style="position:absolute;right:0;top:0;bottom:0;width:560px;display:flex;gap:0;overflow:hidden;">
+            <div class="sp-product-card" style="width:50%;"><span class="sp-sales-badge">SALES</span><div class="sp-product-img" style="width:100%;height:200px;"><img src="https://picsum.photos/seed/gardentools/224/200" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;"/></div><div class="sp-product-name">Flower Vegetables Planting Soil Loosening Shovel</div><div class="sp-product-prices"><span class="sp-price-sale">$59.99</span><span class="sp-price-orig">$99.99</span></div><div class="sp-product-stars"><div class="sp-stars"><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star sp-star-empty" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg></div><span class="sp-review-text">(4.5) 200 reviews</span></div></div>
+            <div class="sp-product-card" style="width:50%;"><div class="sp-product-img" style="width:100%;height:200px;"><img src="https://picsum.photos/seed/gardenlight/224/200" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;"/></div><div class="sp-product-name">Creative Animal Resin Flowerpot Succulents Planter</div><div class="sp-product-prices"><span class="sp-price-sale">$59.99</span><span class="sp-price-orig">$99.99</span></div><div class="sp-product-stars"><div class="sp-stars"><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star sp-star-empty" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg></div><span class="sp-review-text">(4.5) 200 reviews</span></div></div>
+          </div>
+        </section>
+
+        <!-- Product List: Garden -->
+        <section class="sp-product-list" style="position:relative;">
+          <span class="sp-cr-tag">
+            <svg width="8" height="10" viewBox="0 0 8 10" fill="none"><path d="M4 0L8 4H5v6H3V4H0L4 0z" fill="#c2410c"/></svg>CR
+          </span>
+          <div class="sp-section-inner">
+            <div class="sp-section-header">
+              <span class="sp-section-title">More Products From Garden</span>
+              <a class="sp-view-all" href="#">View all <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M12 6l4 4-4 4" stroke="#3b71dc" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+            <div class="sp-products-row">
+              <div class="sp-product-card"><span class="sp-sales-badge">SALES</span><div class="sp-product-img"><img src="https://picsum.photos/seed/watercan/246/246" alt="" loading="lazy"/></div><div class="sp-product-name">V-shaped watering can creative long-mouth plastic</div><div class="sp-product-prices"><span class="sp-price-sale">$59.99</span><span class="sp-price-orig">$99.99</span></div><div class="sp-product-stars"><div class="sp-stars"><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star sp-star-empty" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg></div><span class="sp-review-text">(4.5) 200 reviews</span></div></div>
+              <div class="sp-product-card"><span class="sp-sales-badge">SALES</span><div class="sp-product-img"><img src="https://picsum.photos/seed/solarlight/246/246" alt="" loading="lazy"/></div><div class="sp-product-name">Waterproof 7 Colors Jellyfish Led Solar Garden Lights</div><div class="sp-product-prices"><span class="sp-price-sale">$59.99</span><span class="sp-price-orig">$99.99</span></div><div class="sp-product-stars"><div class="sp-stars"><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star sp-star-empty" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg></div><span class="sp-review-text">(4.5) 200 reviews</span></div></div>
+              <div class="sp-product-card"><span class="sp-sales-badge">SALES</span><div class="sp-product-img"><img src="https://picsum.photos/seed/fountain/246/246" alt="" loading="lazy"/></div><div class="sp-product-name">Floating Waterfall Fountain Solar Panel Powered Fountain</div><div class="sp-product-prices"><span class="sp-price-sale">$59.99</span><span class="sp-price-orig">$99.99</span></div><div class="sp-product-stars"><div class="sp-stars"><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star sp-star-empty" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg></div><span class="sp-review-text">(4.5) 200 reviews</span></div></div>
+              <div class="sp-product-card"><div class="sp-product-img"><img src="https://picsum.photos/seed/terrarium/246/246" alt="" loading="lazy"/></div><div class="sp-product-name">Terrarium Hydroponic Plant Vases Vintage Flower Pot</div><div class="sp-product-prices"><span class="sp-price-sale">$59.99</span></div><div class="sp-product-stars"><div class="sp-stars"><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star sp-star-empty" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg></div><span class="sp-review-text">(4.5) 200 reviews</span></div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Feature Product: Deal of the Week -->
+        <section class="sp-feature-product" style="position:relative;">
+          <span class="sp-cr-tag" style="top:0;right:20px;">
+            <svg width="8" height="10" viewBox="0 0 8 10" fill="none"><path d="M4 0L8 4H5v6H3V4H0L4 0z" fill="#c2410c"/></svg>CR
+          </span>
+          <div class="sp-deal-inner">
+            <div class="sp-deal-header">
+              <span class="sp-deal-title">Deal of the week</span>
+              <span class="sp-deal-timer">05m : 22s</span>
+            </div>
+            <div class="sp-deal-body">
+              <div class="sp-deal-img">
+                <img src="https://picsum.photos/seed/wirelesscharger/380/420" alt="Wireless Charger Speaker"/>
+              </div>
+              <div class="sp-deal-info">
+                <div class="sp-product-stars" style="margin-bottom:4px;">
+                  <div class="sp-stars">
+                    <svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg>
+                    <svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg>
+                    <svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg>
+                    <svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg>
+                    <svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg>
+                  </div>
+                  <span class="sp-review-text">(4.9) 200 reviews</span>
+                </div>
+                <div class="sp-deal-product-title">Wireless Charger Bluetooth Speaker LED Lamp Wooden Phone Holder</div>
+                <div class="sp-deal-prices">
+                  <span class="sp-deal-price-sale">45.00</span>
+                  <span class="sp-deal-price-orig">$90.00</span>
+                  <span class="sp-deal-badge">50% Off</span>
+                </div>
+                <div class="sp-deal-bullets">
+                  <div class="sp-deal-bullet">LED Light, Speaker and Charger, all in one gadget!</div>
+                  <div class="sp-deal-bullet-sub">Bluetooth speaker.</div>
+                  <div class="sp-deal-bullet-sub">Bright led lamp.</div>
+                  <div class="sp-deal-bullet-sub">Smart wireless charger.</div>
+                </div>
+                <div class="sp-deal-color">Color: Burly Wood</div>
+                <div class="sp-deal-qty">
+                  <span>Quantity</span>
+                  <div class="sp-qty-ctrl">
+                    <span class="sp-qty-btn">−</span>
+                    <span class="sp-qty-val">1</span>
+                    <span class="sp-qty-btn">+</span>
+                  </div>
+                </div>
+                <div class="sp-deal-stock">Hurry up! Only 10 items left in stock</div>
+                <div class="sp-deal-ctas">
+                  <button class="sp-cta-add">Add to cart</button>
+                  <button class="sp-cta-buy">Buy now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Customer Love Us -->
+        <section class="sp-customer-love" style="position:relative;">
+          <span class="sp-cr-tag">
+            <svg width="8" height="10" viewBox="0 0 8 10" fill="none"><path d="M4 0L8 4H5v6H3V4H0L4 0z" fill="#c2410c"/></svg>CR
+          </span>
+          <div class="sp-section-inner">
+            <div class="sp-section-header">
+              <span class="sp-section-title">Customer Love Us</span>
+              <a class="sp-view-all" href="#">View all <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M12 6l4 4-4 4" stroke="#3b71dc" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+            <div class="sp-review-cards">
+              <div class="sp-review-card">
+                <div class="sp-review-header">
+                  <div class="sp-reviewer-info">
+                    <span class="sp-reviewer-name">Julio Sillman</span>
+                    <span class="sp-review-date">24/10/2022</span>
+                  </div>
+                  <div class="sp-stars"><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg></div>
+                </div>
+                <div class="sp-review-product-title">The LED Motion Sensor Night Light</div>
+                <div class="sp-review-body">Hydration on the go has never been easier! This foldable water bottle is a real game-changer for my daily commute.</div>
+                <div class="sp-review-product-ref">Wireless Charger Bluetooth Speaker LED Lamp ..</div>
+              </div>
+              <div class="sp-review-card">
+                <div class="sp-review-header">
+                  <div class="sp-reviewer-info">
+                    <span class="sp-reviewer-name">Gerardo Wilkin</span>
+                    <span class="sp-review-date">24/10/2022</span>
+                  </div>
+                  <div class="sp-stars"><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg></div>
+                </div>
+                <div class="sp-review-product-title">The Multi-Purpose Silicone Kitchen</div>
+                <div class="sp-review-body">Say goodbye to scratched pans and hello to these versatile silicone kitchen utensils.</div>
+                <div class="sp-review-product-ref">Creative Animal Resin Flowerpot Succulents ....</div>
+              </div>
+              <div class="sp-review-card">
+                <div class="sp-review-header">
+                  <div class="sp-reviewer-info">
+                    <span class="sp-reviewer-name">Gerardo Wilkin</span>
+                    <span class="sp-review-date">24/10/2022</span>
+                  </div>
+                  <div class="sp-stars"><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg><svg class="sp-star" viewBox="0 0 12 12"><path d="M6 1l1.4 2.8 3.1.45-2.25 2.2.53 3.1L6 8.1 3.22 9.55l.53-3.1L1.5 4.25l3.1-.45L6 1z"/></svg></div>
+                </div>
+                <div class="sp-review-product-title">The Smart Bluetooth Tracker</div>
+                <div class="sp-review-body">Lost keys, misplaced wallets, and wandering pets are a thing of the past with this tracker.</div>
+                <div class="sp-review-product-ref">Minimalism Black Ceramic Dry</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Subscribe -->
+        <section class="sp-subscribe">
+          <div class="sp-subscribe-inner">
+            <div class="sp-subscribe-img">
+              <img src="https://picsum.photos/seed/newsletter/460/316" alt="Subscribe"/>
+            </div>
+            <div class="sp-subscribe-form">
+              <div class="sp-subscribe-title">Subscribe to our newsletter</div>
+              <div class="sp-subscribe-desc">Subscribe to our newsletter for sneak peeks at new collections and early access to exclusive deals.</div>
+              <div class="sp-subscribe-input-wrap">
+                <label class="sp-subscribe-label">Label</label>
+                <input class="sp-subscribe-input" type="email" placeholder="Enter your email"/>
+                <span class="sp-subscribe-hint">Helper text goes here</span>
+              </div>
+              <button class="sp-subscribe-btn">Sign up</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="sp-footer">
+          <div class="sp-footer-inner">
+            <div class="sp-footer-grid">
+              <div>
+                <div class="sp-footer-col-title">Store information</div>
+                <div class="sp-footer-col-body">San Francisco, CA 94104 USA<br>+1 (408) 899-8879</div>
+                <div class="sp-footer-socials">
+                  <a class="sp-social-link" href="#">Facebook</a>
+                  <a class="sp-social-link" href="#">Instagram</a>
+                  <a class="sp-social-link" href="#">Twitter</a>
+                  <a class="sp-social-link" href="#">Tiktok</a>
+                </div>
+              </div>
+              <div>
+                <div class="sp-footer-col-title">Quick shop</div>
+                <div class="sp-footer-col-body">
+                  <a href="#">Home &amp; Garden</a>
+                  <a href="#">Electronics</a>
+                  <a href="#">Apparel</a>
+                  <a href="#">Beauty &amp; health</a>
+                </div>
+              </div>
+              <div>
+                <div class="sp-footer-col-title">Policies</div>
+                <div class="sp-footer-col-body">
+                  <a href="#">Privacy policy</a>
+                  <a href="#">Term of service</a>
+                  <a href="#">Shipping policy</a>
+                  <a href="#">Refund policy</a>
+                  <a href="#">Return policy</a>
+                </div>
+              </div>
+              <div>
+                <div class="sp-footer-col-title">Customer support</div>
+                <div class="sp-footer-col-body">
+                  <a href="#">Contact us</a>
+                  <a href="#">About us</a>
+                  <a href="#">Order tracking</a>
+                  <a href="#">FAQs</a>
+                </div>
+              </div>
+            </div>
+            <div class="sp-footer-bottom">
+              <span class="sp-footer-copyright">Copyright © 2023 Trendie by ShopBase</span>
+              <div class="sp-footer-bottom-links">
+                <a class="sp-footer-bottom-link" href="#">English / USD ($)</a>
+                <a class="sp-footer-bottom-link" href="#">DMCA Report</a>
+              </div>
+            </div>
+          </div>
+        </footer>
+
+      </div><!-- /sp-store-body -->
+      </div><!-- /sp-store-main -->
+    </div><!-- /sp-store-wrapper -->
+  </section><!-- /store-preview-screen -->
+
   <script>
     const BUSINESS_MODEL_STORAGE_KEY = 'convercore.selectedBusinessModel';
     const prototypeCredentials = {
@@ -1903,6 +3703,7 @@
         'store-name': document.getElementById('store-name-screen'),
         'business-goal': document.getElementById('business-goal-screen'),
         'loading-template': document.getElementById('loading-template-screen'),
+        'store-preview': document.getElementById('store-preview-screen'),
       };
 
       Object.entries(screens).forEach(([name, el]) => {
@@ -2259,6 +4060,13 @@
           }, 320);
           return;
         }
+
+        // Last phase complete → navigate to store preview
+        loadingTemplateTimeout = setTimeout(() => {
+          setActiveScreen('store-preview');
+          document.getElementById('store-preview-screen').scrollTop = 0;
+        }, 600);
+        return;
       }
 
       loadingTemplateFrame = requestAnimationFrame(tick);
@@ -2273,6 +4081,15 @@
       runLoadingPhase(0);
     }
 
+    // Report bar toggle
+    const reportBar = document.getElementById('sp-report-bar');
+    const reportToggle = document.getElementById('sp-report-toggle');
+    if (reportToggle) {
+      reportToggle.addEventListener('click', () => {
+        reportBar.classList.toggle('is-open');
+      });
+    }
+
     setupPrototypeFill();
     setupBusinessModelSelection();
     setupStoreNameScreen();
@@ -2281,3 +4098,4 @@
   </script>
 </body>
 </html>
+

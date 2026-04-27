@@ -35,7 +35,7 @@
 │                                                              │
 │  ┌──────────────────────────────────────────────────────┐   │
 │  │  CR Score: 84/100  ·  Top 20% Dropship  ·            │   │ ← Assessment bar
-│  │  13 optimizations applied  ·  [See full report ↓]    │   │   (compact, sticky top)
+│  │  19 optimizations applied  ·  [See full report ↓]    │   │   (compact, sticky top)
 │  └──────────────────────────────────────────────────────┘   │
 │                                                              │
 │  Homepage  │  Product Detail  │  Cart  │  Checkout           │ ← Page tabs
@@ -71,18 +71,21 @@ Luôn visible, sticky top ngay dưới top bar. Compact và scannable trong 3 gi
 |---------|---------|----------|
 | CR Score | `CR Score: 84/100` | Số hóa giá trị USP |
 | Benchmark | `Top 20% Dropship stores` | Context để số có nghĩa |
-| Count | `13 optimizations applied` | Prove thoroughness |
+| Count | `19 optimizations applied` | Prove thoroughness |
 | CTA phụ | `See full report ↓` | Expand detail nếu cần |
 
 **Expand state (khi click "See full report"):**
 Drawer hoặc panel mở ra phía dưới, show breakdown theo từng page:
 
 ```
-Homepage         ████████░░  8/10   5 optimizations
-Product Detail   ███████░░░  7/10   4 optimizations
-Cart             ████████░░  8/10   2 optimizations
-Checkout         █████████░  9/10   2 optimizations
+Homepage         ████████░░  8/10    5 optimizations  ← có score
+Cart             ████████░░  8/10    2 optimizations  ← có score
+Product Detail                      10 optimizations  ← applied, không score
+Checkout                             2 optimizations  ← applied, không score
 ```
+
+**Lý do không tính score cho Product Detail và Checkout:**
+CR Score phản ánh chất lượng thiết kế mà seller đánh giá được ngay — Homepage và Cart là 2 trang buyer nhìn nhiều nhất và dễ so sánh nhất. Product Detail và Checkout có optimizations nhưng mang tính kỹ thuật sâu hơn (bundle logic, form field count) — không phù hợp để quy ra điểm trực quan.
 
 **Score thay đổi theo business model:**
 
@@ -117,32 +120,42 @@ Homepage  →  Product Detail  →  Cart  →  Checkout
 
 ### 6.1 Ba trạng thái của highlight system
 
-#### State 1 — Default (Quiet Pins)
+#### State 1 — Default (CR Badges)
 
-Store hiển thị gần như bình thường. Chỉ có **chấm số nhỏ** ①②③ đặt ở cạnh mỗi element được optimize:
+Store hiển thị gần như bình thường. Mỗi element được optimize có một **badge nhỏ** gồm icon ⚡ (thunder/flash) kèm chữ "CR" đặt ở góc element:
 
 ```
-┌──────────────────────────────┐
-│  [Element nội dung store]  ① │  ← Số nhỏ 16px, góc element
-│                              │
-└──────────────────────────────┘
+┌──────────────────────────────────┐
+│  [Element nội dung store]        │
+│                        [⚡ CR]   │  ← Badge góc phải, compact
+└──────────────────────────────────┘
 ```
 
-- **Kích thước:** 16-18px diameter
-- **Màu:** Neutral subtle (không dùng màu accent mạnh) — chỉ đủ để nhận ra, không đủ để distract
-- **Không có:** border ring, badge ⚡CR, glow — store visual không bị chôn vùi
-- **Mục đích:** User cảm nhận được scope ("có 5 thứ được optimize trên trang này") mà không bị overwhelm
+**Badge anatomy:**
+```
+┌──────────┐
+│ ⚡  CR   │  ← Icon thunder (12px) + label "CR" (10px, semibold)
+└──────────┘
+  Pill shape, height 20px, padding 4px 6px
+```
+
+- **Kích thước:** Height 20px, pill-shaped (border-radius 10px)
+- **Icon:** Thunder/flash ⚡ 12px — thể hiện boost, energy, optimization
+- **Label:** Chữ "CR" 10px semibold — meaningful, user hiểu ngay đây là conversion rate
+- **Màu default:** Subtle — ví dụ amber/yellow mờ (#F59E0B ở opacity 60-70%) với text tối, không dùng màu accent full strength
+- **Không có:** border ring, glow, số thứ tự — badge tự nói lên ý nghĩa mà không cần đánh số
+- **Mục đích:** User nhận ra ngay "đây là điểm được optimize cho CR" — meaningful hơn số thứ tự trung tính
 
 #### State 2 — Spotlight (khi hover pin hoặc element)
 
-Khi user hover vào pin số hoặc element tương ứng:
+Khi user hover vào badge hoặc element tương ứng:
 
 ```
 [Store bị dim 40% opacity — toàn bộ]
 
 ┌──────────────────────────────────┐  ← Border ring sáng lên
-│  [Element] — 100% opacity, nổi  ①│  ← Số chuyển màu accent
-│                                  │
+│  [Element] — 100% opacity, nổi  │
+│                       [⚡ CR] ▲ │  ← Badge đổi màu full accent, scale 1.1x
 └──────────────────────────────────┘
          ↓
 ┌─────────────────────────────────────┐
@@ -153,7 +166,7 @@ Khi user hover vào pin số hoặc element tương ứng:
 
 - **Dim background:** Toàn bộ store (trừ element active) → opacity 40%, blur nhẹ 1-2px
 - **Element active:** opacity 100% + border ring + subtle glow
-- **Pin số:** Đổi màu accent, scale lên nhẹ 1.1x
+- **Badge:** Đổi từ subtle → full accent color (#F59E0B 100%), scale lên 1.1x
 - **Transition:** 200ms ease-out
 - **Chỉ 1 spotlight tại 1 thời điểm** — hover element mới tắt spotlight cũ ngay
 
@@ -162,17 +175,17 @@ Khi user hover vào pin số hoặc element tương ứng:
 Khi user click `Take a tour` trên assessment bar — hệ thống tự động dẫn qua từng optimization:
 
 ```
-Assessment bar: [CR Score 84/100] · [13 optimizations] · [Take a tour →]
+Assessment bar: [CR Score 84/100] · [19 optimizations] · [Take a tour →]
 
 Trong tour:
 ┌────────────────────────────────────────────┐
-│  ① / 13        [Skip]        [Next →]      │  ← Tour controls (bottom bar)
+│  ① / 19        [Skip]        [Next →]      │  ← Tour controls (bottom bar)
 └────────────────────────────────────────────┘
 ```
 
 - Auto-scroll store đến element tiếp theo
 - Spotlight effect giống State 2
-- Progress: `② / 13` hiển thị trên tour control bar
+- Progress: `② / 19` hiển thị trên tour control bar
 - `Skip` thoát khỏi tour về State 1
 - `Next →` chuyển spotlight sang optimization tiếp theo
 - Tour không loop — kết thúc ở optimization cuối, controls ẩn đi
@@ -214,7 +227,7 @@ Pins xuất hiện lần lượt sau khi store load xong — không cùng lúc:
 - Delay: 400ms sau khi store preview load
 - Stagger: Mỗi pin fade in cách nhau 60ms, từ trên xuống dưới
 - Animation: Fade in + scale 0.5 → 1.0 (pop in nhẹ)
-- Tổng thời gian reveal: ~800-1000ms cho 13 pins
+- Tổng thời gian reveal: ~1200-1500ms cho 19 pins
 
 ---
 
@@ -244,45 +257,69 @@ Pins xuất hiện lần lượt sau khi store load xong — không cùng lúc:
 
 ---
 
-### 7.2 Product Detail Page (4 highlights)
+### 7.2 Product Detail Page (10 highlights — applied, không tính vào CR Score)
 
-**Highlight 6 — Price Anchoring**
-- Element: Giá gốc gạch ngang cạnh giá sale
-- Tooltip: `Giá gốc gạch ngang tạo reference point — buyer không cần so sánh bên ngoài để cảm thấy đang mua được giá tốt`
+**Highlight 6 — Anchor Price + % OFF Badge**
+- Element: Giá sale ($22.5) + giá gốc gạch ngang ($45.99) + badge "50% OFF"
+- Tooltip: `Giá gốc gạch ngang tạo reference point — buyer cảm thấy đang được deal mà không cần so sánh bên ngoài. Conversion trigger mạnh nhất với impulse purchase`
 
-**Highlight 7 — Stock / Scarcity Indicator**
-- Element: "Only X left in stock" gần CTA
-- Tooltip: `Scarcity signal tăng add-to-cart rate ~12% — đặc biệt hiệu quả với impulse purchase. Phải đặt gần CTA, không phải cuối trang`
+**Highlight 7 — Discount Countdown**
+- Element: Countdown timer "Discount only available in 30m : 40s" ngay dưới giá
+- Tooltip: `Đồng hồ đếm ngược tại điểm quyết định kích hoạt loss aversion — buyer phải mua ngay, không thể trì hoãn. Tăng add-to-cart rate 10-15%`
 
-**Highlight 8 — Sticky Add-to-Cart Bar**
-- Element: ATC bar cố định khi scroll
-- Tooltip: `68% quyết định mua xảy ra sau khi đọc reviews — sticky ATC đảm bảo CTA luôn trong tầm với tại thời điểm quyết định`
+**Highlight 8 — Stock Scarcity**
+- Element: "X items left in stock" đặt ngay cạnh CTA
+- Tooltip: `Số stock cụ thể cạnh CTA cắt giai đoạn so sánh — buyer mua ngay vì sợ hết hàng. Hiệu quả nhất khi đặt gần nút mua, không phải cuối trang`
 
 **Highlight 9 — Review Stars gần Price**
-- Element: Star rating đặt cạnh giá, không phải cuối trang
-- Tooltip: `Proximity của social proof và price giảm price objection — buyer nhìn giá, thấy ngay trust signal. Đặt cuối trang mất 80% hiệu quả`
+- Element: "(4.5) 200 reviews" đặt ngay trên block giá
+- Tooltip: `Social proof đặt trên giá = buyer thấy trust signal trước khi đọc giá — giảm price objection. Đặt cuối trang mất 80% hiệu quả`
+
+**Highlight 10 — Dual CTA (Add to Cart + Buy Now)**
+- Element: Hai button "ADD TO CART" và "BUY NOW" cạnh nhau
+- Tooltip: `Add to Cart cho buyer muốn tiếp tục xem; Buy Now cho buyer impulse muốn checkout ngay. Hai path song song tăng CR cho cả 2 loại buyer`
+
+**Highlight 11 — Estimated Delivery Date**
+- Element: "Arrive in [date range] — Delivery to [country]" ngay dưới CTA
+- Tooltip: `Ngày giao hàng cụ thể xóa lo ngại "không biết bao giờ nhận" — giảm câu hỏi support và checkout abandon ~6%`
+
+**Highlight 12 — Accessories Cross-sell**
+- Element: Section "Accessories" với sản phẩm bổ sung + nút "Add" 1-click
+- Tooltip: `Buyer đã quyết mua product chính là thời điểm sẵn lòng nhất để add thêm. Add 1-click không break flow — accessories tăng AOV trung bình 8-12%`
+
+**Highlight 13 — Volume Discount Tiers**
+- Element: Section "Buy more Save more" với 3 tier: Buy 2 / Buy 3 / Buy 4
+- Tooltip: `3 tier giá rõ ràng để buyer tự tính lợi và chủ động tăng số lượng. Không cần khuyến mãi — buyer tự đẩy AOV lên 1.5-2x`
+
+**Highlight 14 — Frequently Bought Together**
+- Element: Section "Frequently bought together" — bundle pre-selected + Total price hiển thị sẵn
+- Tooltip: `Bundle pre-selected với total price = buyer thấy ngay tiết kiệm được bao nhiêu khi mua cùng. Bundle acceptance rate 25-35% — leverage AOV cao nhất trên product page`
+
+**Highlight 15 — Rating Breakdown + Reviews có ảnh**
+- Element: Section "Our Customers Love Us" — bar chart % từng sao + reviews kèm ảnh buyer thật
+- Tooltip: `Bar chart 92% five-star + review có ảnh = bằng chứng mạnh nhất trước decision cuối. Review có ảnh được tin gấp 3x review chỉ có text`
 
 ---
 
 ### 7.3 Cart (2 highlights)
 
-**Highlight 10 — Free Shipping Progress**
+**Highlight 16 — Free Shipping Progress**
 - Element: Thanh tiến trình "Add $X more for free shipping"
 - Tooltip: `Free shipping threshold progress tăng AOV ~15% — buyer chủ động thêm sản phẩm để đạt ngưỡng miễn phí vận chuyển`
 
-**Highlight 11 — Upsell / Cross-sell**
+**Highlight 17 — Upsell / Cross-sell**
 - Element: Section "You may also like" hoặc "Frequently bought together"
 - Tooltip: `Post-cart upsell tăng AOV mà không interrupt purchase flow — buyer đã commit mua, đây là thời điểm đề xuất hiệu quả nhất`
 
 ---
 
-### 7.4 Checkout (2 highlights)
+### 7.4 Checkout (2 highlights — applied, không tính vào CR Score)
 
-**Highlight 12 — Rút gọn Form Fields**
+**Highlight 18 — Rút gọn Form Fields**
 - Element: Checkout form với số fields tối thiểu
 - Tooltip: `Mỗi field thừa tăng abandon rate ~10% — form này chỉ giữ 7 fields thiết yếu, loại bỏ mọi thứ không cần để tính phí`
 
-**Highlight 13 — Trust Badges gần Payment Button**
+**Highlight 19 — Trust Badges gần Payment Button**
 - Element: Trust badges và payment logos ngay cạnh nút thanh toán
 - Tooltip: `High-anxiety moment — buyer lo nhất về bảo mật thanh toán tại đây. Trust signals đặt đúng vị trí này giảm checkout abandon ~15%`
 
@@ -302,7 +339,7 @@ Không ép user chọn — cả 3 cách đều hoạt động song song.
 
 ### 8.2 Assessment bar + Tour entry point
 
-Assessment bar luôn có nút `Take a tour (13) →` ở bên phải:
+Assessment bar luôn có nút `Take a tour (19) →` ở bên phải:
 - Click → tour bắt đầu từ optimization đầu tiên của page đang active
 - Nếu đang ở Product Detail tab → tour bắt đầu từ optimization #6
 - Tour control bar xuất hiện ở bottom của store preview (không che nội dung store)
@@ -338,7 +375,7 @@ User vừa được thuyết phục bởi highlights. Đây là "peak motivation
 ## 10. Điều không làm
 
 - **Không dùng sidebar panel** — highlights phải inline trên store, không tách rời
-- **Không show border ring + badge ⚡ trên mọi element cùng lúc** — default chỉ có quiet pins số
+- **Không show border ring trên mọi element cùng lúc** — default chỉ có CR badge subtle, border ring chỉ xuất hiện khi spotlight active
 - **Không spotlight nhiều hơn 1 element cùng lúc** — khi hover element mới, spotlight cũ tắt ngay
 - **Không dùng màu accent mạnh cho pins ở default state** — pins phải subtle, không tranh attention với store
 - **Không chặn store navigation** — user phải click được link trong preview như buyer thật
